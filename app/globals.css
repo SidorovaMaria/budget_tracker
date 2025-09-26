@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  /* All Default Colors  */
+  --color-beige-500: #98908b;
+  --color-beige-100: #f8f4f0;
+  --color-grey-900: #201f24;
+  --color-grey-500: #696868;
+  --color-grey-300: #b3b3b3;
+  --color-grey-100: #f2f2f2;
+  --color-s-green: #277c78;
+  --color-s-yellow: #f2cdac;
+  --color-s-cyan: #82c9d7;
+  --color-s-navy: #626070;
+  --color-s-red: #c94736;
+  --color-s-purple: #826cb0;
+  --color-o-purple: #af81ba;
+  --color-o-turquoise: #597c7c;
+  --color-o-brown: #93674f;
+  --color-o-magenta: #934f6f;
+  --color-o-blue: #3f82b2;
+  --color-o-navy-grey: #97a0ac;
+  --color-o-army-green: #7f9161;
+  --color-o-gold: #cab361;
+  --color-o-orange: #be6c49;
+  --color-white: #ffffff;
+  /* Line Height */
+  --leading-120: 120%;
+  --leading-150: 150%;
+  /* Spacing and sizing utilities like px-4, max-h-16, and many more */
+  --spacing-500: 40px;
+  --spacing-400: 32px;
+  --spacing-300: 24px;
+  --spacing-250: 20px;
+  --spacing-200: 16px;
+  --spacing-150: 12px;
+  --spacing-100: 8px;
+  --spacing-50: 4px;
+}
+@theme inline {
+  --font-sans: var(--font-public-sans), sans-serif;
+}
+
+@layer base {
+  /* Global Style for headings */
+  body {
+    @apply font-sans;
+  }
+  h1 {
+    @apply text-[32px] leading-120 font-bold;
+  }
+  h2 {
+    @apply text-xl leading-120 font-bold;
+  }
+  h3 {
+    @apply text-base leading-150 font-bold;
+  }
+  p.four {
+    @apply text-sm leading-150 font-normal;
+  }
+  p.four.bold {
+    @apply text-sm leading-150 font-bold;
+  }
+  p.five {
+    @apply text-xs leading-150 font-normal;
+  }
+  p.five.bold {
+    @apply text-xs leading-150 font-bold;
+  }
+}
