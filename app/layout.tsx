@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
       "A simple personal budget tracker app to manage your finances effectively. Track income, expenses, and savings all in one place, with great UI and easy-to-use features.",
     images: ["TODO: add image url"],
   },
-  metadataBase: new URL("TODO: add url"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
 };
 
 export default async function RootLayout({
@@ -53,9 +54,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
     <html lang="en">
-      <body className={`${publicSans.variable} antialiased`}>{children}</body>
+      <head>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+        />
+      </head>
+      <SessionProvider session={session}>
+        <body className={`${publicSans.variable} antialiased`}>{children}</body>
+      </SessionProvider>
     </html>
   );
 }

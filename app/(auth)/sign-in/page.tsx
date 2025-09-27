@@ -11,6 +11,9 @@ import { blockEnter, blockEnterTransition } from "@/lib/variants/layout-variants
 import PasswordField from "@/components/auth/PasswordField";
 import InputField from "@/components/forms/InputField";
 import Link from "next/link";
+import GoogleProvider from "@/components/forms/GoogleProvider";
+
+// import GoogleOAuthForm from "@/components/forms/GoogleOAuthForm";
 type FormInput = z.input<typeof SignInSchema>;
 type FormOutput = z.infer<typeof SignInSchema>;
 
@@ -26,8 +29,7 @@ const SignInPage = () => {
   });
   const {
     handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = methods;
 
   const onSubmit: SubmitHandler<FormOutput> = async (data) => {
@@ -82,6 +84,7 @@ const SignInPage = () => {
           </button>
         </form>
       </FormProvider>
+      <GoogleProvider />
       <p className="four w-full text-center mt-8  text-grey-500">
         Need to create an account?{" "}
         <Link

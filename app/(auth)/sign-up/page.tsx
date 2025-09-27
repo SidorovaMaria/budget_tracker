@@ -10,6 +10,7 @@ import { SignUpSchema } from "@/lib/validation/validation-auth";
 import PasswordField from "@/components/auth/PasswordField";
 import InputField from "@/components/forms/InputField";
 import Link from "next/link";
+import GoogleProvider from "@/components/forms/GoogleProvider";
 type FormInput = z.input<typeof SignUpSchema>;
 type FormOutput = z.infer<typeof SignUpSchema>;
 const SignUpPage = () => {
@@ -91,6 +92,7 @@ const SignUpPage = () => {
           </button>
         </form>
       </FormProvider>
+      <GoogleProvider />
       <p className="four w-full text-center mt-8  text-grey-500">
         Already have an account?{" "}
         <Link
