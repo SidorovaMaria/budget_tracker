@@ -44,7 +44,7 @@
 @layer base {
   /* Global Style for headings */
   body {
-    @apply font-sans;
+    @apply font-sans text-grey-900;
   }
   h1 {
     @apply text-[32px] leading-120 font-bold;
@@ -66,5 +66,55 @@
   }
   p.five.bold {
     @apply text-xs leading-150 font-bold;
+  }
+}
+@utility no-ring {
+  @apply outline-none ring-0 ring-offset-0 focus:ring-0 focus:ring-offset-0 focus-visible:ring-offset-0;
+}
+@utility input-ring {
+  @apply h-8 rounded-none border-none  bg-transparent outline-none ring-offset-0 focus:ring-1  focus:ring-beige-500 focus:ring-offset-0 focus-visible:ring-offset-0;
+}
+
+@layer components {
+  /* Forms and Inputs Styles */
+  label.label-auth {
+    @apply text-xs font-bold leading-150 text-grey-500;
+  }
+  .input-basic {
+    @apply w-full px-5 py-3 rounded-lg bg-white border-2 border-beige-500
+    text-sm leading-150 font-normal text-grey-900 placeholder:text-beige-500
+     has-focus-within:border-o-blue;
+  }
+  .input-basic input {
+    @apply no-ring w-full h-full bg-transparent outline-none;
+  }
+
+  /* Button Styles */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg p-4  duration-300 ease-in-out transition-all cursor-pointer transform  text-sm font-bold leading-150 hover:shadow-md shadow-black/25;
+    /* hover:scale-105 focus:scale-100 active:scale-100 no-ring */
+  }
+
+  .btn-primary {
+    @apply bg-grey-900 text-white  hover:bg-grey-500;
+  }
+  .btn-secondary {
+    @apply border border-transparent bg-beige-100 hover:bg-white hover:border-beige-500;
+  }
+  .btn-destroy {
+    @apply bg-s-red text-white hover:bg-s-red/80;
+  }
+  .btn-tertiary {
+    @apply text-grey-500 hover:text-grey-900 inline-flex items-center
+    gap-3 text-sm font-bold leading-150;
+  }
+
+  /* Side Bar Menu */
+  .side-bar-item {
+    @apply px-8 py-4 bg-transparent inline-flex items-center gap-4 rounded-r-2xl text-grey-500 text-base leading-150 font-bold hover:text-grey-100  hover:backdrop-blur-md duration-300 ease-in-out transition-all cursor-pointer min-w-[276px];
+  }
+  .side-bar-item[data-selected="true"] {
+    @apply bg-beige-100 text-grey-900 border-l-4 border-s-green
+      transition-all duration-300 ease-in-out;
   }
 }
