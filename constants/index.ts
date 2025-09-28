@@ -32,3 +32,20 @@ export const NavLinks: NavLink[] = [
     href: ROUTES.RECURRING,
   },
 ];
+
+export const CATEGORIES = [
+  "Entertainment",
+  "Bills",
+  "Groceries",
+  "Dining Out",
+  "Transportation",
+  "Personal Care",
+  "Education",
+  "Lifestyle",
+  "Shopping",
+  "Health",
+  "Travel",
+  "General",
+] as const;
+
+export type Category = (typeof CATEGORIES)[number];

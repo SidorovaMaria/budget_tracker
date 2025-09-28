@@ -1,8 +1,10 @@
-export default function Home() {
+export default async function Home() {
   return (
-    <main>
-      <h2>Welcome to the Finance Tracker</h2>
-      <p>Your personal budget management tool.</p>
-    </main>
+    <>
+      {/* Title */}
+      <h1 id="overview" className="">
+        Overview
+      </h1>
+    </>
   );
 }

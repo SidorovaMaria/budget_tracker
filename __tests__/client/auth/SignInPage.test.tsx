@@ -3,7 +3,7 @@ import { SignInSchema } from "@/lib/validation/validation-auth";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { z } from "zod";
-import { Sign } from "crypto";
+
 function zodEmailError(email: string, password?: "StrongPassw0rd!") {
   const result = SignInSchema.safeParse({ email, password });
   if (result.success) return undefined;

@@ -1,7 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import AuthLayout from "../(auth)/layout";
+
 import MobileNavBar from "@/components/navigation/MobileNavBar";
 import LeftSideBar from "@/components/navigation/LeftSideBar";
 
@@ -24,7 +22,13 @@ const MainLayout = ({ children }: LayoutProps) => {
   return (
     <main className="min-h-screen w-full flex ">
       <LeftSideBar />
-      {children}
+      <section
+        id="main-content"
+        className="flex flex-col w-full px-4 py-6  gap-8
+      md:px-10 md:py-8 "
+      >
+        {children}
+      </section>
 
       <MobileNavBar />
     </main>

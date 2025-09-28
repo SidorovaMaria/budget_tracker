@@ -1,7 +1,14 @@
 import React from "react";
 
 const TransactionsPage = () => {
-  return <div>Transactions</div>;
+  return (
+    <>
+      {/* Title */}
+      <h1 id="transactions" className="">
+        Transactions
+      </h1>
+    </>
+  );
 };
 
 export default TransactionsPage;

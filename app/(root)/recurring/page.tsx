@@ -1,7 +1,14 @@
 import React from "react";
 
 const RecurringTransactionsPage = () => {
-  return <div>RecurringTransactions</div>;
+  return (
+    <>
+      {/* Title */}
+      <h1 id="recurring-bills" className="">
+        Recurring Bills
+      </h1>
+    </>
+  );
 };
 
 export default RecurringTransactionsPage;

@@ -1,4 +1,4 @@
-import { stagger, Transition, Variants } from "motion";
+import { Transition, Variants } from "motion";
 
 export const SPRING_SNAPPY: Transition = {
   type: "spring",

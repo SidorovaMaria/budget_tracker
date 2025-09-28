@@ -6,9 +6,6 @@ import React, { memo, useMemo } from "react";
 import { motion, MotionConfig, useReducedMotion } from "motion/react";
 import { REDUCED_MOTION, SPRING_SMOOTH } from "@/constants/motionVariants";
 
-const NAV_HEIGHT_MD = "74px"; // md+
-const NAV_HEIGHT_BASE = "52px"; // base
-
 const MobileNavBar = () => {
   const pathname = usePathname();
   const prefersReducedMotion = useReducedMotion();
@@ -20,7 +17,7 @@ const MobileNavBar = () => {
     <MotionConfig transition={transition}>
       <nav
         aria-label="Mobile Navigation"
-        className={`fixed bottom-0 px-4  bg-grey-900  w-full rounded-t-lg flex justify-between items-center md:px-10 lg:hidden z-50  h-[${NAV_HEIGHT_BASE}] min-h-[${NAV_HEIGHT_BASE}] md:min-h-[${NAV_HEIGHT_MD}] pt-2`}
+        className={`fixed bottom-0 px-4  bg-grey-900  w-full rounded-t-lg flex justify-between items-center md:px-10 lg:hidden z-50  h-[52px] min-h-[52px] md:min-h-[74px] pt-2`}
       >
         <ul className="flex w-full h-full items-stretch justify-between md:gap-[42px]">
           {NavLinks.map((link) => (

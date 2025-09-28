@@ -1,7 +1,9 @@
 "use client";
+
+// TODO Add HINT AND SLOTS ELEMENTS
 import React, { InputHTMLAttributes } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { FieldValues, get, Path, useFormContext } from "react-hook-form";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { fadeInFadeOut, fadeInFadeOutReduced } from "@/lib/variants/variants";
 type FormInputProps<T extends FieldValues> = {
   name: Path<T>;

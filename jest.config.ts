@@ -3,8 +3,6 @@
  * https://jestjs.io/docs/configuration
  */
 
-import { create } from "domain";
-import type { Config } from "jest";
 import nextJest from "next/jest.js";
 
 const createJestConfig = nextJest({
