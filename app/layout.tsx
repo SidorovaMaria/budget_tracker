@@ -3,6 +3,7 @@ import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { Toaster } from "sonner";
 import MobileNavBar from "@/components/navigation/MobileNavBar";
 
 const publicSans = Public_Sans({
@@ -69,6 +70,7 @@ export default async function RootLayout({
         <body className={` ${publicSans.variable} antialiased `}>
           {children}
           <MobileNavBar />
+          <Toaster />
         </body>
       </SessionProvider>
     </html>

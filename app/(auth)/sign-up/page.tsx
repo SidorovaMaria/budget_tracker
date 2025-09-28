@@ -11,6 +11,9 @@ import PasswordField from "@/components/auth/PasswordField";
 import InputField from "@/components/forms/InputField";
 import Link from "next/link";
 import GoogleProvider from "@/components/forms/GoogleProvider";
+import { SignUpWithCredentials } from "@/database/actions/authentication.action";
+import { toast } from "@/components/ui/Toast";
+
 type FormInput = z.input<typeof SignUpSchema>;
 type FormOutput = z.infer<typeof SignUpSchema>;
 const SignUpPage = () => {
@@ -25,18 +28,29 @@ const SignUpPage = () => {
     mode: "onBlur",
   });
   const {
+    reset,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit: SubmitHandler<FormOutput> = async (data) => {
-    try {
-      // TODO: Implement sign-up logic here
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log(data);
-    } catch (error) {
-      console.error(error);
+    const result = (await SignUpWithCredentials(data)) as ActionResponse;
+    if (!result.success) {
+      toast({
+        title: "Oopsie! It's an Error",
+        description: result.error?.message || "Something went wrong",
+        theme: "error",
+      });
+    } else {
+      toast({
+        title: "Yahoo! Success",
+        description: "Account created successfully",
+        theme: "success",
+      });
+      // Handle success (e.g., redirect to dashboard or show a success message)
+      console.log("User registered successfully");
     }
+    reset();
   };
 
   return (
