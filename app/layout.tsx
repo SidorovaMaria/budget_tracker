@@ -3,6 +3,7 @@ import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import MobileNavBar from "@/components/navigation/MobileNavBar";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -65,7 +66,10 @@ export default async function RootLayout({
         />
       </head>
       <SessionProvider session={session}>
-        <body className={`${publicSans.variable} antialiased`}>{children}</body>
+        <body className={` ${publicSans.variable} antialiased `}>
+          {children}
+          <MobileNavBar />
+        </body>
       </SessionProvider>
     </html>
   );
