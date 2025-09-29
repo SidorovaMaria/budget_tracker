@@ -2,6 +2,8 @@ import React from "react";
 
 import MobileNavBar from "@/components/navigation/MobileNavBar";
 import LeftSideBar from "@/components/navigation/LeftSideBar";
+import { auth, signOut } from "@/auth";
+import { redirect } from "next/navigation";
 
 /**
  * AuthLayout is a layout component for authentication-related pages.
@@ -18,7 +20,11 @@ import LeftSideBar from "@/components/navigation/LeftSideBar";
  * @returns {JSX.Element} The rendered authentication layout.
  */
 
-const MainLayout = ({ children }: LayoutProps) => {
+const MainLayout = async ({ children }: LayoutProps) => {
+  const session = await auth();
+  if (!session?.user) {
+    redirect("/sign-in");
+  }
   return (
     <main className="min-h-screen w-full flex ">
       <LeftSideBar />
@@ -29,8 +35,16 @@ const MainLayout = ({ children }: LayoutProps) => {
       >
         {children}
       </section>
-
       <MobileNavBar />
+      <form
+        className="fixed top-4 right-4"
+        action={async () => {
+          "use server";
+          await signOut();
+        }}
+      >
+        <button type="submit">Sign out</button>
+      </form>
     </main>
   );
 };

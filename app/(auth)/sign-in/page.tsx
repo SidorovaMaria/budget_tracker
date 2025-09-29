@@ -12,6 +12,10 @@ import PasswordField from "@/components/auth/PasswordField";
 import InputField from "@/components/forms/InputField";
 import Link from "next/link";
 import GoogleProvider from "@/components/forms/GoogleProvider";
+import { SignInWithCredentials } from "@/database/actions/authentication.action";
+import { toast } from "@/components/ui/Toast";
+import { redirect } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
 
 // import GoogleOAuthForm from "@/components/forms/GoogleOAuthForm";
 type FormInput = z.input<typeof SignInSchema>;
@@ -33,12 +37,20 @@ const SignInPage = () => {
   } = methods;
 
   const onSubmit: SubmitHandler<FormOutput> = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      // TODO: Implement login logic here logic here
-      console.log(data);
-    } catch (error) {
-      console.error(error);
+    const result = (await SignInWithCredentials(data)) as ActionResponse;
+    if (!result.success) {
+      toast({
+        title: "Error",
+        description: result.error?.message || "Something went wrong",
+        theme: "error",
+      });
+    } else {
+      toast({
+        title: " Success",
+        description: "Logged in successfully",
+        theme: "success",
+      });
+      redirect(ROUTES.HOME);
     }
   };
 
@@ -88,7 +100,7 @@ const SignInPage = () => {
       <p className="four w-full text-center mt-8  text-grey-500">
         Need to create an account?{" "}
         <Link
-          href="./sign-up"
+          href={ROUTES.SIGN_UP}
           className="font-bold hover:underline hover:text-grey-900  underline-offset-2 transition duration-200 ease-in"
         >
           Sign up

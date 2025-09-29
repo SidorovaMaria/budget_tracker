@@ -44,7 +44,7 @@ function Toast(props: ToastProps) {
       {Icon && icon && <Icon className="w-6 h-6 text-white" />}
       <div className="flex flex-1 flex-col w-full items-start text-white font-bold ">
         <p className="text-base leading-150 font-bold">{title}</p>
-        <p className="text-sm leading-150 font-bold;">{description}</p>
+        <p className="text-sm leading-150 font-normal">{description}</p>
       </div>
     </div>
   );

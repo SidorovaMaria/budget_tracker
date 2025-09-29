@@ -13,6 +13,8 @@ import Link from "next/link";
 import GoogleProvider from "@/components/forms/GoogleProvider";
 import { SignUpWithCredentials } from "@/database/actions/authentication.action";
 import { toast } from "@/components/ui/Toast";
+import { redirect } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
 
 type FormInput = z.input<typeof SignUpSchema>;
 type FormOutput = z.infer<typeof SignUpSchema>;
@@ -37,18 +39,17 @@ const SignUpPage = () => {
     const result = (await SignUpWithCredentials(data)) as ActionResponse;
     if (!result.success) {
       toast({
-        title: "Oopsie! It's an Error",
+        title: "Error",
         description: result.error?.message || "Something went wrong",
         theme: "error",
       });
     } else {
       toast({
-        title: "Yahoo! Success",
+        title: "Success",
         description: "Account created successfully",
         theme: "success",
       });
-      // Handle success (e.g., redirect to dashboard or show a success message)
-      console.log("User registered successfully");
+      redirect(ROUTES.HOME);
     }
     reset();
   };

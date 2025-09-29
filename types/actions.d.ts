@@ -3,6 +3,10 @@ type AuthCredentials = {
   email: string;
   password: string;
 };
+type SignInParams = {
+  email: string;
+  password: string;
+};
 type SignInWithOAuthParams = {
   provider: "google"; // Extend this union type as you add more providers
   providerAccountId: string;
