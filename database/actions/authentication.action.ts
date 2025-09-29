@@ -94,6 +94,6 @@ export async function SignInWithCredentials(params: SignInParams): Promise<Actio
     await signIn("credentials", { email, password, redirect: false });
     return { success: true, status: 200 };
   } catch (error) {
-    return { success: false, status: 500, error: { message: "Internal server error" } };
+    return { success: false, status: 500, error: { message: "Internal server error" + error } };
   }
 }

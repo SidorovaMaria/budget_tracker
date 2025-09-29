@@ -1,3 +1,4 @@
+import { seedDefaultThemes } from "@/database/seed";
 import mongoose, { Mongoose } from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
@@ -21,6 +22,7 @@ if (!cached) {
 
 const connectDB = async () => {
   if (cached.conn) {
+    console.log("Using cached MongoDB connection");
     return cached.conn;
   }
   if (!cached.promise) {
@@ -28,8 +30,9 @@ const connectDB = async () => {
       .connect(MONGODB_URI, {
         dbName: "finance",
       })
-      .then((result) => {
+      .then(async (result) => {
         console.log("Connected to MongoDB");
+        await seedDefaultThemes();
         return result;
       })
       .catch((error) => {
