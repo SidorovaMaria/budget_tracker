@@ -2,7 +2,7 @@
 
 import { validateAction } from "@/lib/handler/validate";
 import { BudgetSchema } from "@/lib/validation/validation";
-import Budget from "../models/budget.model";
+import Budget, { IBudget, IBudgetDoc } from "../models/budget.model";
 
 export async function createBudget({
   categoryId,
@@ -12,7 +12,7 @@ export async function createBudget({
   categoryId: string;
   maximum: number;
   themeId: string;
-}) {
+}): Promise<ActionResponse<IBudgetDoc>> {
   const validated = await validateAction({
     params: { categoryId, maximum, themeId },
     schema: BudgetSchema,
@@ -24,6 +24,30 @@ export async function createBudget({
     return { success: false, status: 401, error: { message: "Unauthorized" } };
   }
   try {
+    const existingBudget = await Budget.exists({
+      ownerId: session.user.id,
+      categoryId: params.categoryId,
+    });
+    const existingTheme = await Budget.exists({
+      ownerId: session.user.id,
+      themeId: params.themeId,
+    });
+    // Will Let the UI handle this, just a checker
+    if (existingBudget) {
+      return {
+        success: false,
+        status: 400,
+        error: { message: "Budget for this category already exists" },
+      };
+    }
+    // Will Let the UI handle this, just a checker
+    if (existingTheme) {
+      return {
+        success: false,
+        status: 400,
+        error: { message: "Budget with this theme already exists" },
+      };
+    }
     const newBudget = await Budget.create({
       ownerId: session.user.id,
       categoryId: params.categoryId,

@@ -5,9 +5,7 @@ import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import InputField from "./InputField";
-import ThemeSelect from "./ThemeSelect";
-import Category from "@/database/models/category.model";
-import CategorySelect from "./CategorySelect";
+
 import { createBudget } from "@/database/actions/budget.action";
 import { toast } from "../ui/Toast";
 import FormOptionsSelect from "./FormOptionsSelect";
@@ -38,12 +36,16 @@ const AddEditBudget = ({ budgetData, onSuccess, isModalOpen }: AddEditBudgetProp
   } = form;
   const onSubmit = async (data: FormInput) => {
     console.log("Submitting budget data:", data);
-    const { success, error } = await createBudget({
+    const {
+      success,
+      error,
+      data: budgetData,
+    } = await createBudget({
       categoryId: data.categoryId,
       maximum: data.maximum as number,
       themeId: data.themeId,
     });
-    if (!success) {
+    if (!success || !budgetData) {
       toast({
         title: "Error",
         description: error?.message || "Failed to create budget",
@@ -52,7 +54,7 @@ const AddEditBudget = ({ budgetData, onSuccess, isModalOpen }: AddEditBudgetProp
     } else {
       toast({
         title: "Success",
-        description: `Budget for '${data.categoryId}' created successfully`,
+        description: `Budget created successfully`,
         theme: "success",
       });
       if (onSuccess) onSuccess();

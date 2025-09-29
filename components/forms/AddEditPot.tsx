@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import InputField from "./InputField";
-import ThemeSelect from "./ThemeSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { createPot } from "@/database/actions/pot.action";

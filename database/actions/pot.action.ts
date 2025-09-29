@@ -17,6 +17,30 @@ export async function createPot(name: string, target: number, themeId: string) {
   //Create Pot
 
   try {
+    const existingPot = await Pot.exists({
+      ownerId: session.user.id,
+      name: params.name,
+    });
+    // Will Let the UI handle this, just a checker
+    if (existingPot) {
+      return {
+        success: false,
+        status: 400,
+        error: { message: "Pot with this name already exists" },
+      };
+    }
+    const existingTheme = await Pot.exists({
+      ownerId: session.user.id,
+      themeId: params.themeId,
+    });
+    // Will Let the UI handle this, just a checker
+    if (existingTheme) {
+      return {
+        success: false,
+        status: 400,
+        error: { message: "Pot with this theme already exists" },
+      };
+    }
     const newPot = await Pot.create({
       ownerId: session.user.id,
       name: params.name,

@@ -16,7 +16,7 @@ export const loadThemeOptions = cache(async (): Promise<ThemeOption[]> => {
   try {
     await connectDB();
     const { success, data } = await getThemes();
-    console.log("Loaded themes:", data);
+
     if (!success || !data) return [];
     return data.map((t) => ({
       label: t.name, // "Navy"
