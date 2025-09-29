@@ -6,7 +6,7 @@ export const getCategories = async (): Promise<ActionResponse<ICategoryDoc[]>> =
     if (!categories) {
       return { success: false, status: 404, error: { message: "No categories found" } };
     }
-    return { success: true, status: 200, data: categories };
+    return { success: true, status: 200, data: JSON.parse(JSON.stringify(categories)) };
   } catch (error) {
     console.log("Error fetching categories:", error);
     return { success: false, status: 500, error: { message: "Internal server error" } };
