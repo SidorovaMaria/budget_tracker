@@ -48,6 +48,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.id = token.sub as string;
       return session;
     },
+    async jwt({ token, account }) {
+      if (account) {
+        const { data: existingAccount, success } = (await authApi.accounts.getByProvider(
+          account.type === "credentials" ? token.email! : account.providerAccountId
+        )) as ActionResponse<IAccountDoc>;
+
+        if (!success || !existingAccount) return token;
+
+        const userId = existingAccount.userId;
+
+        if (userId) token.sub = userId.toString();
+      }
+
+      return token;
+    },
 
     async signIn({ user, account }) {
       if (account?.type === "credentials") return true;
