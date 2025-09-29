@@ -3,6 +3,7 @@
 import { validateAction } from "@/lib/handler/validate";
 import { BudgetSchema } from "@/lib/validation/validation";
 import Budget, { IBudget, IBudgetDoc } from "../models/budget.model";
+import { ICategoryDoc } from "../models/category.model";
 
 export async function createBudget({
   categoryId,
@@ -12,7 +13,7 @@ export async function createBudget({
   categoryId: string;
   maximum: number;
   themeId: string;
-}): Promise<ActionResponse<IBudgetDoc>> {
+}): Promise<ActionResponse<IBudgetDoc & { categoryId: ICategoryDoc }>> {
   const validated = await validateAction({
     params: { categoryId, maximum, themeId },
     schema: BudgetSchema,
@@ -54,6 +55,7 @@ export async function createBudget({
       maximum: params.maximum,
       themeId: params.themeId,
     });
+    await newBudget.populate("categoryId");
     return { success: true, status: 201, data: JSON.parse(JSON.stringify(newBudget)) };
   } catch (error) {
     return {

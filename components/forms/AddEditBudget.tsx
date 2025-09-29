@@ -35,7 +35,6 @@ const AddEditBudget = ({ budgetData, onSuccess, isModalOpen }: AddEditBudgetProp
     formState: { isSubmitting },
   } = form;
   const onSubmit = async (data: FormInput) => {
-    console.log("Submitting budget data:", data);
     const {
       success,
       error,
@@ -45,6 +44,7 @@ const AddEditBudget = ({ budgetData, onSuccess, isModalOpen }: AddEditBudgetProp
       maximum: data.maximum as number,
       themeId: data.themeId,
     });
+
     if (!success || !budgetData) {
       toast({
         title: "Error",
@@ -54,7 +54,7 @@ const AddEditBudget = ({ budgetData, onSuccess, isModalOpen }: AddEditBudgetProp
     } else {
       toast({
         title: "Success",
-        description: `Budget created successfully`,
+        description: `Budget '${budgetData.categoryId.name}' created successfully`,
         theme: "success",
       });
       if (onSuccess) onSuccess();
