@@ -16,7 +16,7 @@ const BudgetSchema = new Schema<IBudget>(
     maximum: { type: Number, required: true, min: 0 },
     themeId: { type: Schema.Types.ObjectId, required: true, ref: "Theme" },
   },
-  { timestamps: true, toJSON: { virtuals: true, transform: decimalToNumber } }
+  { timestamps: true }
 );
 const Budget = models?.Budget || model<IBudget>("Budget", BudgetSchema);
 export default Budget;

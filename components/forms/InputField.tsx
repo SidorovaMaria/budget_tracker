@@ -11,7 +11,6 @@ type FormInputProps<T extends FieldValues> = {
   hint?: string;
   className?: string;
   leftSlot?: React.ReactNode;
-  rightSlot?: React.ReactNode;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "name" | "id">;
 
 const InputField = <T extends FieldValues>({
@@ -20,12 +19,12 @@ const InputField = <T extends FieldValues>({
   hint,
   className,
   leftSlot,
-  rightSlot,
   ...inputProps
 }: FormInputProps<T>) => {
   const prefersReducedMotion = useReducedMotion();
   const {
     register,
+
     formState: { errors, isSubmitting },
   } = useFormContext<T>();
   const inputId = name.replace(/\./g, "-");
@@ -33,10 +32,12 @@ const InputField = <T extends FieldValues>({
   const errMsg = errors[name]?.message;
   return (
     <div className={`flex flex-col gap-1 w-full ${className || ""}`}>
-      <label htmlFor={inputId} className={`label-auth ${hasError ? "text-s-red" : ""}`}>
+      <label htmlFor={inputId} className={`label-input ${hasError ? "text-s-red" : ""}`}>
         {label}
       </label>
-      <div className={`input-basic ${hasError ? "border-s-red" : ""}`}>
+
+      <div className={`input-basic flex items-center ${hasError ? "border-s-red" : ""}`}>
+        {leftSlot && <div className="mr-3">{leftSlot}</div>}
         <input
           id={inputId}
           {...register(name)}
@@ -47,7 +48,7 @@ const InputField = <T extends FieldValues>({
         />
       </div>
       <AnimatePresence mode="wait">
-        {hasError && (
+        {hasError ? (
           <motion.p
             key={errors[name]?.message as string}
             initial="hidden"
@@ -60,6 +61,19 @@ const InputField = <T extends FieldValues>({
           >
             {errMsg as string}
           </motion.p>
+        ) : hint ? (
+          <motion.p
+            className="input-hint "
+            key="hint"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={prefersReducedMotion ? fadeInFadeOutReduced : fadeInFadeOut}
+          >
+            {hint}
+          </motion.p>
+        ) : (
+          <p className="input-hint error">&nbsp;</p>
         )}
       </AnimatePresence>
     </div>

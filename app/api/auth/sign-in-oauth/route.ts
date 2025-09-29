@@ -1,10 +1,11 @@
 import Account from "@/database/models/account.model";
 import User from "@/database/models/user.model";
 import connectDB from "@/lib/mongoose";
-import { signInOAuthSchema } from "@/lib/validation/validation";
+
 import { NextResponse } from "next/server";
 import slugify from "slugify";
 import mongoose from "mongoose";
+import { signInOAuthSchema } from "@/lib/validation/validation-auth";
 export async function POST(request: Request) {
   const { provider, providerAccountId, user } = await request.json();
   await connectDB();

@@ -1,6 +1,6 @@
-import { model, models, Schema, Types } from "mongoose";
+import { Document, model, models, Schema, Types } from "mongoose";
 
-interface ICategory {
+export interface ICategory {
   name: string; //e.g. Food & Dining
   key: string; //slug version of name e.g. food-dining
 }

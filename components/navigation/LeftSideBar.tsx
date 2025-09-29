@@ -147,7 +147,7 @@ const SideBarItem = memo(function SideBarItem({
       data-active={active}
       data-minimize={minimize}
     >
-      <Icon className="size-6 text-grey-300 group-data-[active=true]:text-s-green transition duration-300 ease-in-out relative z-20 shrink-0" />
+      <Icon className="size-6 text-grey-300 group-data-[active=true]:text-s-green group-hover:text-white transition duration-300 ease-in-out relative z-20 shrink-0" />
       <AnimatePresence mode="sync" initial={false}>
         {minimize ? null : (
           <motion.p

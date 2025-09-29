@@ -1,8 +1,8 @@
 "use client";
+import { CategoryOption, ThemeOption } from "@/database/loaders/loadOptions";
 import { createContext, useContext } from "react";
 
-import { Option } from "@/database/loaders/loadOptions";
-type OptionsValue = { themes: Option[]; categories: Option[] };
+type OptionsValue = { themes: ThemeOption[]; categories: CategoryOption[] };
 const OptionsContext = createContext<OptionsValue>({ themes: [], categories: [] });
 
 export function OptionsProviderClient({

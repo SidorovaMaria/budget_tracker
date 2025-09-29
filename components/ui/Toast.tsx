@@ -30,7 +30,7 @@ export function toast(toast: Omit<ToastProps, "id">) {
 function Toast(props: ToastProps) {
   const { title, description, theme, id, icon } = props;
   const Icon = theme ? ThemeIcon[theme] : null;
-  console.log(Icon);
+
   return (
     <div
       className="flex rounded-xl sw-full md:min-w-xs items-center p-4 border-2  shadow-lg to-40% bg-gradient-to-br backdrop-blur-md  gap-2 group
