@@ -1,27 +1,25 @@
+import { defaultCategories, defaultThemes } from "@/constants";
+import Category from "./models/category.model";
 import Theme, { ITheme } from "./models/theme.model";
 
-const defaultThemes: ITheme[] = [
-  { name: "Green", key: "#green", value: "#277C78" },
-  { name: "Yellow", key: "#yellow", value: "#F2CDAC" },
-  { name: "Cyan", key: "#cyan", value: "#82C9D7" },
-  { name: "Navy", key: "#navy", value: "#626070" },
-  { name: "Red", key: "#red", value: "#C94736" },
-  { name: "Purple", key: "#purple", value: "#826CB0" },
-  { name: "Turquoise", key: "#turquoise", value: "#597C7C" },
-  { name: "Brown", key: "#brown", value: "#93674F" },
-  { name: "Magenta", key: "#magenta", value: "#934F6F" },
-  { name: "Blue", key: "#blue", value: "#3F82B2" },
-  { name: "Grey", key: "#grey", value: "#97A0AC" },
-  { name: "Army", key: "#army", value: "#7F9161" },
-  { name: "Pink", key: "#pink", value: "#AF81BA" },
-  { name: "Gold", key: "#gold", value: "#CAB361" },
-  { name: "Orange", key: "#orange", value: "#BE6C49" },
-];
-
-export async function seedDefaultThemes() {
+async function seedDefaultThemes() {
   const themeCount = await Theme.countDocuments();
   if (themeCount === 0) {
     await Theme.insertMany(defaultThemes);
     console.log("Default themes seeded successfully.");
   }
+}
+
+async function seedDefaultCategories() {
+  const categoryCount = await Category.countDocuments();
+  if (categoryCount === 0) {
+    await Category.insertMany(defaultCategories);
+    console.log("Default categories seeded successfully.");
+  }
+}
+
+// Run the seed functions
+export async function runSeeds() {
+  await seedDefaultThemes();
+  await seedDefaultCategories();
 }

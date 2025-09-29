@@ -14,7 +14,5 @@ const ThemeSchema = new Schema<ITheme>({
   value: { type: String, required: true }, //HEX value
 });
 
-ThemeSchema.index({ key: 1 }, { unique: true });
-
 const Theme = models?.Theme || model<ITheme>("Theme", ThemeSchema);
 export default Theme;

@@ -1,4 +1,4 @@
-import { seedDefaultThemes } from "@/database/seed";
+import { runSeeds } from "@/database/seed";
 import mongoose, { Mongoose } from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
@@ -32,7 +32,7 @@ const connectDB = async () => {
       })
       .then(async (result) => {
         console.log("Connected to MongoDB");
-        await seedDefaultThemes();
+        await runSeeds();
         return result;
       })
       .catch((error) => {
