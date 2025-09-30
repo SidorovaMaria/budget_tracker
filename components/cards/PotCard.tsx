@@ -20,9 +20,18 @@ const PotCard = ({ pot }: { pot: PotJSON }) => {
         theme: "error",
       });
     } else {
+      const message =
+        pot.total !== 0
+          ? `${toLocaleStringWithCommas(
+              pot.total,
+              "USD",
+              2
+            )} has been refunded to your current account.`
+          : "";
+
       toast({
         title: "Success",
-        description: `Pot '${pot.name}' deleted successfully`,
+        description: `Pot '${pot.name}' deleted successfully. ${message}`,
         theme: "success",
       });
     }
@@ -75,14 +84,14 @@ const PotCard = ({ pot }: { pot: PotJSON }) => {
       <div className="flex-center w-full gap-4">
         <Modal
           title={`Add to '${pot.name}'`}
-          modalContent={<AddWithdrawFromPot />}
+          modalContent={<AddWithdrawFromPot pot={pot} action="add" />}
           description="Add money to your pot to keep it separate from your main balance. As soon as you add this money, it will be deducted from your current balance."
         >
           <button className="btn btn-secondary w-full ">+Add Money</button>
         </Modal>
         <Modal
           title={`Withdraw from '${pot.name}'`}
-          modalContent={<AddWithdrawFromPot />}
+          modalContent={<AddWithdrawFromPot pot={pot} action="withdraw" />}
           description="Withdraw from your pot to put money back in your main balance. This will reduce the amount you have in this pot."
         >
           <button className="btn btn-secondary w-full ">Withdraw</button>
