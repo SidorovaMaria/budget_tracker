@@ -12,10 +12,18 @@ type SelectProps = {
   options: Option[]; // keep this ref stable via a memoized provider
   colorTag?: boolean;
   placeholder?: string;
+  emptyOptionMsg?: string;
   onValueChange: (id: string) => void; // this ref may change: we’ll ignore it in memo compare
 };
 
-function SelectImpl({ value, options, colorTag, onValueChange, placeholder }: SelectProps) {
+function SelectImpl({
+  value,
+  options,
+  colorTag,
+  onValueChange,
+  placeholder,
+  emptyOptionMsg,
+}: SelectProps) {
   const optionMap = React.useMemo(() => {
     const m = new Map<string, Option>();
     for (const o of options) m.set(o.id, o);
@@ -23,6 +31,11 @@ function SelectImpl({ value, options, colorTag, onValueChange, placeholder }: Se
   }, [options]);
 
   const selected = optionMap.get(value);
+  if (!options || options.length === 0) {
+    return (
+      <div className="text-sm text-gray-500 italic">{emptyOptionMsg ?? "No options available"}</div>
+    );
+  }
 
   return (
     <RadixSelect.Root value={value} onValueChange={onValueChange}>

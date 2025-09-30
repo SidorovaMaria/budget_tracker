@@ -1,6 +1,7 @@
 import User from "@/database/models/user.model";
 import connectDB from "@/lib/mongoose";
-import { UserSchema } from "@/lib/validation/validation";
+import { UserSchema } from "@/lib/validation/validation-auth";
+
 import { NextResponse } from "next/server";
 
 //GET users from MONGODB

@@ -33,7 +33,7 @@ const MainLayout = async ({ children }: LayoutProps) => {
         <section
           id="main-content"
           className="flex flex-col w-full px-4 py-6  gap-8
-      md:px-10 md:py-8 bg-beige-100"
+      md:px-10 md:py-8 "
         >
           {children}
         </section>

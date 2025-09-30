@@ -35,7 +35,7 @@ const LeftSideBar = () => {
         aria-label="Sidebar"
         initial={false}
         animate={{ width: minimize ? COLLAPSED_W : EXPANDED_W }}
-        className="hidden lg:flex flex-col gap-6 min-h-screen bg-grey-900 sticky top-0 min-w-[96px] w-[300px] pb-6 rounded-r-2xl "
+        className="hidden lg:flex flex-col gap-6 min-h-screen bg-grey-900 sticky top-0 max-h-screen min-w-[96px] w-[300px] pb-6 rounded-r-2xl "
       >
         {/* Logo */}
         <AnimatePresence mode="wait" initial={false}>

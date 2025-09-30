@@ -13,9 +13,12 @@ import React from "react";
 const PotsPage = async () => {
   const { success, data: potsData, error } = await getPots();
   if (!success) {
-    console.log("Error fetching pots:", error);
-    // Handle the error appropriately, e.g., show a message to the user
+    console.log("Failed to fetch pots" + error?.message);
+    return null;
   }
+  const notAvailableThemes = potsData
+    ? (potsData as IPotDoc[]).map((pot) => pot.themeId._id.toString())
+    : [];
   return (
     <>
       {/* Title */}
@@ -23,7 +26,7 @@ const PotsPage = async () => {
         <h1 className="">Pots</h1>
         <Modal
           title="Add New Pot"
-          modalContent={<AddEditPot />}
+          modalContent={<AddEditPot notAvailableThemes={notAvailableThemes} />}
           description="Create a pot to set savings targets. These can help keep you on track as you save for special purchases."
         >
           <button className="btn btn-primary">+ Add New Pot</button>

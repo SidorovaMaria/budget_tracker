@@ -19,6 +19,7 @@ type AddEditPotProps = {
   onSuccess?: () => void;
   isModalOpen?: boolean;
   closeDropDown?: () => void;
+  notAvailableThemes?: string[];
 };
 const AddEditPot = ({
   potData,
@@ -26,6 +27,7 @@ const AddEditPot = ({
   isModalOpen,
   action = "add",
   closeDropDown,
+  notAvailableThemes,
 }: AddEditPotProps) => {
   const form = useForm<FormInput, FormOutput>({
     resolver: zodResolver(PotSchema),
@@ -61,9 +63,9 @@ const AddEditPot = ({
           description: `Pot '${data.name}' updated successfully`,
           theme: "success",
         });
+        if (onSuccess) onSuccess();
+        if (closeDropDown) closeDropDown();
       }
-      if (onSuccess) onSuccess();
-      if (closeDropDown) closeDropDown();
 
       form.reset();
     } else {
@@ -80,10 +82,9 @@ const AddEditPot = ({
           description: `Pot '${data.name}' created successfully`,
           theme: "success",
         });
+        if (onSuccess) onSuccess();
+        form.reset();
       }
-      if (onSuccess) onSuccess();
-
-      form.reset();
     }
   };
   useEffect(() => {
@@ -117,7 +118,14 @@ const AddEditPot = ({
           enterKeyHint="next"
           placeholder="E.g. 2000"
         />
-        <FormOptionsSelect name="themeId" label="Color Tag" useOption={useThemeOptions} colorTag />
+        <FormOptionsSelect
+          name="themeId"
+          label="Color Tag"
+          useOption={useThemeOptions}
+          colorTag
+          notAvailable={notAvailableThemes}
+          emptyOptionMsg="No themes available. Please consider deleting an existing pot to free up themes."
+        />
         <button type="submit" className="btn btn-primary mt-2" disabled={isSubmitting}>
           {action === "edit"
             ? isSubmitting

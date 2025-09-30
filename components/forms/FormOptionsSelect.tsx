@@ -11,19 +11,27 @@ type FormOptionsSelectProps<T extends FieldValues> = {
   label: string;
   useOption: UseOptions<Options>;
   colorTag?: boolean;
+  notAvailable?: string[];
+  emptyOptionMsg?: string;
 };
 const FormOptionsSelect = <T extends FieldValues>({
   name,
   label,
   useOption,
   colorTag,
+  notAvailable,
+  emptyOptionMsg,
 }: FormOptionsSelectProps<T>) => {
   const prefersReducedMotion = useReducedMotion();
   const {
     control,
     formState: { errors },
   } = useFormContext<T>();
-  const options = useOption(); // ThemeOption[]
+  let options = useOption(); // ThemeOption[]
+  if (notAvailable && notAvailable.length > 0) {
+    options = options.filter((option) => !notAvailable.includes(option.id));
+  }
+
   const hasError = !!errors[name];
   return (
     <div className="flex flex-col gap-1 w-full">
@@ -36,6 +44,7 @@ const FormOptionsSelect = <T extends FieldValues>({
             value={(field.value as string) ?? ""} // <-- value is a string id
             options={options}
             colorTag={colorTag ? true : false}
+            emptyOptionMsg={emptyOptionMsg}
             onValueChange={field.onChange} // <-- emits id string
           />
         )}
