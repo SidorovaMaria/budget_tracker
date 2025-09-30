@@ -20,7 +20,7 @@ type AddEditBudgetProps = {
   isModalOpen?: boolean;
 };
 type FormInput = z.input<typeof BudgetSchema>;
-type FormOutput = z.infer<typeof BudgetSchema>;
+type FormOutput = z.output<typeof BudgetSchema>;
 const AddEditBudget = ({ budgetData, onSuccess, isModalOpen }: AddEditBudgetProps) => {
   const form = useForm<FormInput, FormOutput>({
     resolver: zodResolver(BudgetSchema),

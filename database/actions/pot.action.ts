@@ -65,7 +65,7 @@ export async function createPot(name: string, target: number, themeId: string) {
 /* =========================
    READ
 ========================= */
-export async function getPots() {
+export async function getPots(): Promise<ActionResponse<PotJSON[]>> {
   try {
     const session = await auth();
     if (!session?.user?.id) {
