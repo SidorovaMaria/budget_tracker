@@ -20,3 +20,13 @@ export const toLocaleStringWithCommas = (num: number, currency: string, afterCom
     currency: currency,
   });
 };
+// Helper (optional but nice): unwraps action results or throws a clear error
+export function unwrap<T>(
+  res: { success: boolean; data?: T; error?: { message?: string } },
+  label: string
+): T {
+  if (!res?.success || res.data == null) {
+    throw new Error(res?.error?.message || `Could not fetch ${label}`);
+  }
+  return res.data;
+}

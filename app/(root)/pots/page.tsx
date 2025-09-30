@@ -16,9 +16,7 @@ const PotsPage = async () => {
     console.log("Failed to fetch pots" + error?.message);
     return null;
   }
-  const notAvailableThemes = potsData
-    ? (potsData as IPotDoc[]).map((pot) => pot.themeId._id.toString())
-    : [];
+  const notAvailableThemes = potsData ? potsData.map((pot) => pot.themeId._id.toString()) : [];
   return (
     <>
       {/* Title */}

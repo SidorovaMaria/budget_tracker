@@ -171,6 +171,9 @@
     @apply bg-beige-100 text-grey-900 border-l-4 border-s-green
       transition-all duration-300 ease-in-out;
   }
+  .overview-content {
+    @apply flex flex-col w-full gap-8 px-5 py-6 rounded-lg bg-white md:p-8;
+  }
 }
 
 /* ==== kEYFRAMERS ===== */

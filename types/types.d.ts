@@ -31,3 +31,14 @@ type PotJSON = {
     value: string;
   };
 };
+
+type UserJSON = {
+  id: string;
+  username: string;
+  email: string;
+  balance: {
+    current: number;
+    income: number;
+    expenses: number;
+  };
+};
