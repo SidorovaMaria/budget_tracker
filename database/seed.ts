@@ -6,7 +6,6 @@ async function seedDefaultThemes() {
   const themeCount = await Theme.countDocuments();
   if (themeCount === 0) {
     await Theme.insertMany(defaultThemes);
-    console.log("Default themes seeded successfully.");
   }
 }
 
@@ -14,7 +13,6 @@ async function seedDefaultCategories() {
   const categoryCount = await Category.countDocuments();
   if (categoryCount === 0) {
     await Category.insertMany(defaultCategories);
-    console.log("Default categories seeded successfully.");
   }
 }
 

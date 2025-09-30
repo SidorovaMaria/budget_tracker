@@ -1,4 +1,5 @@
 import { Document, model, models, Schema, Types } from "mongoose";
+import { IThemeDoc } from "./theme.model";
 
 interface IPot {
   ownerId: Types.ObjectId;
@@ -16,7 +17,22 @@ const PotSchema = new Schema<IPot>(
     total: { type: Schema.Types.Decimal128, required: true, default: 0, min: 0 },
     themeId: { type: Schema.Types.ObjectId, required: true, ref: "Theme" },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (_doc, ret) => {
+        // Convert Decimal128 to number for JSON responses
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const conv = (v: any) =>
+          v && typeof v === "object" && v._bsontype === "Decimal128" ? Number(v.toString()) : v;
+
+        ret.target = conv(ret.target);
+        ret.total = conv(ret.total);
+        return ret;
+      },
+    },
+  }
 );
 
 const Pot = models?.Pot || model<IPot>("Pot", PotSchema);

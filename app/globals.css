@@ -74,17 +74,40 @@
 @utility input-ring {
   @apply h-8 rounded-none border-none  bg-transparent outline-none ring-offset-0 focus:ring-1  focus:ring-beige-500 focus:ring-offset-0 focus-visible:ring-offset-0;
 }
+
 @utility flex-center {
   @apply flex items-center justify-center;
 }
 @utility flex-row-between {
   @apply flex flex-row items-center justify-between;
 }
+
 @utility transition-300 {
   @apply transition-all duration-300 ease-in-out;
 }
 @utility drop-shadow {
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25);
+}
+@utility text-preset-1 {
+  @apply text-[32px] leading-120 font-bold;
+}
+@utility text-preset-2 {
+  @apply text-xl leading-120 font-bold;
+}
+@utility text-preset-3 {
+  @apply text-base leading-150 font-bold;
+}
+@utility text-preset-4 {
+  @apply text-sm leading-150 font-normal;
+}
+@utility text-preset-4-bold {
+  @apply text-sm leading-150 font-bold;
+}
+@utility text-preset-5 {
+  @apply text-xs leading-150 font-normal;
+}
+@utility text-preset-5-bold {
+  @apply text-xs leading-150 font-bold;
 }
 @layer components {
   input[type="number"]::-webkit-outer-spin-button,
@@ -135,6 +158,9 @@
   .btn-tertiary {
     @apply text-grey-300 hover:text-grey-900 inline-flex items-center
     gap-3 text-sm font-bold leading-150;
+  }
+  .dropdown-btn {
+    @apply px-5 py-3 rounded-lg bg-white text-preset-4 hover:bg-grey-100 cursor-pointer text-left duration-300;
   }
 
   /* Side Bar Menu */

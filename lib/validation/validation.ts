@@ -11,6 +11,9 @@ export const PotSchema = z.object({
     .min(1, { error: "Target must be at least 1" }),
   themeId: z.string().min(1, { error: "Theme is required" }),
 });
+export const DeletePotSchema = z.object({
+  potId: z.string().min(1, { error: "Pot ID is required" }),
+});
 
 export const BudgetSchema = z.object({
   categoryId: z.string().min(1, { error: "Category is required" }),

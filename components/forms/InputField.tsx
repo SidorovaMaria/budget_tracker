@@ -72,9 +72,7 @@ const InputField = <T extends FieldValues>({
           >
             {hint}
           </motion.p>
-        ) : (
-          <p className="input-hint error">&nbsp;</p>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );

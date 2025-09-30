@@ -16,7 +16,21 @@ const BudgetSchema = new Schema<IBudget>(
     maximum: { type: Number, required: true, min: 0 },
     themeId: { type: Schema.Types.ObjectId, required: true, ref: "Theme" },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (_doc, ret) => {
+        // Convert Decimal128 to number for JSON responses
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const conv = (v: any) =>
+          v && typeof v === "object" && v._bsontype === "Decimal128" ? Number(v.toString()) : v;
+
+        ret.maximum = conv(ret.maximum);
+        return ret;
+      },
+    },
+  }
 );
 const Budget = models?.Budget || model<IBudget>("Budget", BudgetSchema);
 export default Budget;

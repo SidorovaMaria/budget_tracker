@@ -16,3 +16,18 @@ type ActionResponse<T = null> = {
 
 type SuccessResponse<T = null> = ActionResponse<T> & { success: true };
 type ErrorResponse = ActionResponse<undefined> & { success: false };
+type PotJSON = {
+  id: string;
+  ownerId: string;
+  name: string;
+  target: number;
+  total: number;
+  updatedAt: string;
+  createdAt: string;
+  themeId: {
+    _id: string;
+    key: string;
+    name: string;
+    value: string;
+  };
+};
