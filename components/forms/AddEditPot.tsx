@@ -6,7 +6,7 @@ import z from "zod";
 import InputField from "./InputField";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { createPot } from "@/database/actions/pot.action";
+import { createPot, updatePot } from "@/database/actions/pot.action";
 import { toast } from "@/components/ui/Toast";
 import FormOptionsSelect from "./FormOptionsSelect";
 import { useThemeOptions } from "@/context/OptionsContext";
@@ -14,21 +14,25 @@ import { useThemeOptions } from "@/context/OptionsContext";
 type FormInput = z.input<typeof PotSchema>;
 type FormOutput = z.infer<typeof PotSchema>;
 type AddEditPotProps = {
-  potData?: {
-    name: string;
-    target: number;
-    themeId: string;
-  };
+  action?: "add" | "edit";
+  potData?: PotJSON;
   onSuccess?: () => void;
   isModalOpen?: boolean;
+  closeDropDown?: () => void;
 };
-const AddEditPot = ({ potData, onSuccess, isModalOpen }: AddEditPotProps) => {
+const AddEditPot = ({
+  potData,
+  onSuccess,
+  isModalOpen,
+  action = "add",
+  closeDropDown,
+}: AddEditPotProps) => {
   const form = useForm<FormInput, FormOutput>({
     resolver: zodResolver(PotSchema),
     defaultValues: {
       name: potData?.name || "",
       target: potData?.target || undefined,
-      themeId: potData?.themeId || "",
+      themeId: potData?.themeId._id || "",
     },
   });
   const {
@@ -38,20 +42,47 @@ const AddEditPot = ({ potData, onSuccess, isModalOpen }: AddEditPotProps) => {
   } = form;
 
   const onSubmit = async (data: FormInput) => {
-    const { success, error } = await createPot(data.name, data.target as number, data.themeId);
-    if (!success) {
-      toast({
-        title: "Error",
-        description: error?.message || "Failed to create pot",
-        theme: "error",
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: `Pot '${data.name}' created successfully`,
-        theme: "success",
-      });
+    if (action === "edit") {
+      const { success, error } = await updatePot(
+        potData?.id as string,
+        data.name,
+        data.target as number,
+        data.themeId
+      );
+      if (!success) {
+        toast({
+          title: "Error",
+          description: error?.message || "Failed to update pot",
+          theme: "error",
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: `Pot '${data.name}' updated successfully`,
+          theme: "success",
+        });
+      }
       if (onSuccess) onSuccess();
+      if (closeDropDown) closeDropDown();
+
+      form.reset();
+    } else {
+      const { success, error } = await createPot(data.name, data.target as number, data.themeId);
+      if (!success) {
+        toast({
+          title: "Error",
+          description: error?.message || "Failed to create pot",
+          theme: "error",
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: `Pot '${data.name}' created successfully`,
+          theme: "success",
+        });
+      }
+      if (onSuccess) onSuccess();
+
       form.reset();
     }
   };
@@ -88,7 +119,13 @@ const AddEditPot = ({ potData, onSuccess, isModalOpen }: AddEditPotProps) => {
         />
         <FormOptionsSelect name="themeId" label="Color Tag" useOption={useThemeOptions} colorTag />
         <button type="submit" className="btn btn-primary mt-2" disabled={isSubmitting}>
-          {isSubmitting ? "Adding..." : "Add Pot"}
+          {action === "edit"
+            ? isSubmitting
+              ? "Saving..."
+              : "Save Changes"
+            : isSubmitting
+            ? "Adding..."
+            : "Add Pot"}
         </button>
       </form>
     </FormProvider>
