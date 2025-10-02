@@ -38,13 +38,18 @@ const PotsPage = async () => {
           emptyStateBtn={
             <Modal
               title="Add New Pot"
-              modalContent={<AddEditPot />}
+              modalContent={<AddEditPot notAvailableThemes={notAvailableThemes} />}
               description="Create a pot to set savings targets. These can help keep you on track as you save for special purchases."
             >
               <button className="btn btn-primary min-w-[300px]">+ Add New Pot</button>
             </Modal>
           }
-          render={(potsData) => <PotsClientList potsData={potsData as PotJSON[]} />}
+          render={(potsData) => (
+            <PotsClientList
+              potsData={potsData as PotJSON[]}
+              notAvailableThemes={notAvailableThemes}
+            />
+          )}
         />
       </section>
     </>

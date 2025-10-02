@@ -1,5 +1,5 @@
 "use client";
-import { DropdownMenu, DropdownMenu as DropDownRadix } from "radix-ui";
+import { DropdownMenu as DropDownRadix } from "radix-ui";
 import React from "react";
 type DropDownMenuProps = {
   context: React.ReactElement<{ onClose?: () => void }>;

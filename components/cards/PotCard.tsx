@@ -10,7 +10,7 @@ import DropDownMenu from "../ui/DropDownMenu";
 import AddEditPot from "../forms/AddEditPot";
 import { deletePot } from "@/database/actions/pot.action";
 import { toast } from "../ui/Toast";
-const PotCard = ({ pot }: { pot: PotJSON }) => {
+const PotCard = ({ pot, notAvailableThemes }: { pot: PotJSON; notAvailableThemes: string[] }) => {
   const handlePotDelete = async () => {
     const { success, error } = await deletePot(pot.id);
     if (!success) {
@@ -49,8 +49,16 @@ const PotCard = ({ pot }: { pot: PotJSON }) => {
         </h3>
 
         <DropDownMenu
-          trigger={<IconElipsis className="size-5 cursor-pointer hover:scale-105 transition-300" />}
-          context={<PotDropdownContent pot={pot} handlePotDelete={handlePotDelete} />}
+          trigger={
+            <IconElipsis className="size-4 text-grey-300 hover:text-grey-900  cursor-pointer hover:scale-105 transition-300" />
+          }
+          context={
+            <PotDropdownContent
+              pot={pot}
+              handlePotDelete={handlePotDelete}
+              notAvailableThemes={notAvailableThemes}
+            />
+          }
         />
       </div>
       <section className="flex flex-col w-full gap-4 ">
@@ -134,16 +142,26 @@ const PotDropdownContent = ({
   pot,
   handlePotDelete,
   onClose,
+  notAvailableThemes,
 }: {
   pot: PotJSON;
   handlePotDelete: () => void;
   onClose?: () => void;
+  notAvailableThemes: string[];
 }) => {
+  const withCurrentThems = notAvailableThemes.filter((id) => id !== pot.themeId._id.toString());
   return (
     <>
       <Modal
         title={`Edit Pot`}
-        modalContent={<AddEditPot potData={pot} action="edit" closeDropDown={onClose} />}
+        modalContent={
+          <AddEditPot
+            potData={pot}
+            action="edit"
+            closeDropDown={onClose}
+            notAvailableThemes={withCurrentThems}
+          />
+        }
         description="If your saving targets change, feel free to update your pots."
       >
         <button className="dropdown-btn">Edit Pot</button>

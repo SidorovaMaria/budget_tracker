@@ -5,7 +5,13 @@ import PotCard from "../cards/PotCard";
 import { cardEnterExit, cardEnterExitTransition } from "@/lib/variants/layout-variants";
 import { reducedMotionTransition } from "@/lib/variants/variants";
 
-const PotsClientList = ({ potsData }: { potsData: PotJSON[] }) => {
+const PotsClientList = ({
+  potsData,
+  notAvailableThemes,
+}: {
+  potsData: PotJSON[];
+  notAvailableThemes: string[];
+}) => {
   const prefersReducedMotion = useReducedMotion();
   return (
     <MotionConfig
@@ -31,7 +37,7 @@ const PotsClientList = ({ potsData }: { potsData: PotJSON[] }) => {
                   key={String(pot.id)}
                   variants={cardEnterExit}
                 >
-                  <PotCard pot={pot} />
+                  <PotCard pot={pot} notAvailableThemes={notAvailableThemes} />
                 </motion.li>
               ))}
             </AnimatePresence>
