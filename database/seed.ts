@@ -81,6 +81,33 @@ export async function seedDemoTransactions() {
     if (!generalCat) {
       throw new Error('Missing required "General" category in the database');
     }
+    //Change Date to curent month and year
+    const now = new Date();
+    const currentMonth = now.getMonth(); // 0-11
+    const currentYear = now.getFullYear();
+    // Prepare docs
+    DEFAULT_TRANSACTIONS.forEach((tx) => {
+      const txDate = new Date(tx.date);
+      //if month is 8 (september) change to current month and year
+      //if month is 7 (august) change to previous month and current year
+      //else leave as is
+      if (txDate.getMonth() === 8) {
+        txDate.setMonth(currentMonth);
+        txDate.setFullYear(currentYear);
+      } else if (txDate.getMonth() === 7) {
+        if (currentMonth === 0) {
+          // January
+          txDate.setMonth(11); // December
+          txDate.setFullYear(currentYear - 1);
+        } else {
+          txDate.setMonth(currentMonth - 1);
+          txDate.setFullYear(currentYear);
+        }
+      } else {
+        txDate.setFullYear(currentYear);
+      }
+      tx.date = txDate.toISOString();
+    });
 
     const docs = DEFAULT_TRANSACTIONS.map((tx) => ({
       ownerId: new Types.ObjectId(userId), // be explicit

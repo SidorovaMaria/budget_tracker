@@ -90,7 +90,8 @@ export async function createTransaction({
 }
 
 const sortMapping: Record<SortKey, Record<string, SortOrder>> = {
-  latest: { createdAt: -1, _id: -1 },
+  latest: { date: -1, _id: -1 },
+  newest: { createdAt: -1, _id: -1 },
   oldest: { date: 1, _id: 1 },
   az: { name: 1, date: -1, _id: -1 },
   za: { name: -1, date: -1, _id: -1 },
