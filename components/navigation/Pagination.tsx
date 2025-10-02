@@ -49,17 +49,16 @@ const Pagination = ({ pagination }: PaginationProps) => {
   let pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   if (totalPages > 5) {
     if (page <= 3) {
-      // console.log("First 3 pages");
+      //  "First 3 pages"
       pageNumbers = [1, 2, 3, 4, totalPages];
     } else if (page >= totalPages - 2) {
-      // console.log("Last 3 pages");
+      // "Last 3 pages"
       pageNumbers = [1, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
     } else {
-      // console.log("Middle pages");
+      // "Middle pages"
       pageNumbers = [1, page - 1, page, page + 1, totalPages];
     }
   }
-  console.log("Pagination render:", { pageNumbers });
 
   return (
     <div className="flex-row-between w-full">

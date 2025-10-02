@@ -11,8 +11,6 @@ type PotsOverviewProps = {
 };
 
 const PotsOverview = ({ total, pots }: PotsOverviewProps) => {
-  console.log("PotsOverview props:", { total, pots });
-
   return (
     <section className="overview-content" aria-labelledby="Top 4 Pots">
       <OverviewLink title="Pots" href={ROUTES.POTS} linkText="See Details" />

@@ -6,7 +6,7 @@ import {
   defaultThemes,
 } from "@/constants";
 import Category from "./models/category.model";
-import Theme, { ITheme } from "./models/theme.model";
+import Theme from "./models/theme.model";
 import Transaction from "./models/transaction.model";
 import { Types } from "mongoose";
 import { validateAction } from "@/lib/handler/validate";
@@ -14,8 +14,6 @@ import mongoose from "mongoose";
 import User from "./models/user.model";
 import Pot from "./models/pot.model";
 import Budget from "./models/budget.model";
-import { revalidatePath } from "next/cache";
-import { ROUTES } from "@/constants/routes";
 
 async function seedDefaultThemes() {
   const themeCount = await Theme.countDocuments();
@@ -104,7 +102,7 @@ export async function seedDemoTransactions() {
 
     // Commit
     await session.commitTransaction();
-    session.endSession();
+    await session.endSession();
 
     return {
       success: true,
@@ -113,7 +111,7 @@ export async function seedDemoTransactions() {
     };
   } catch (error) {
     await session.abortTransaction();
-    session.endSession();
+    await session.endSession();
     return { success: false, status: 500, error: { message: "Server error: " + error } };
   }
 }
@@ -170,7 +168,7 @@ export async function seedDemoPots() {
 
     // Commit
     await session.commitTransaction();
-    session.endSession();
+    await session.endSession();
 
     return {
       success: true,
@@ -179,7 +177,7 @@ export async function seedDemoPots() {
     };
   } catch (error) {
     await session.abortTransaction();
-    session.endSession();
+    await session.endSession();
     return { success: false, status: 500, error: { message: "Server error: " + error } };
   }
 }
@@ -242,7 +240,7 @@ export async function seedDemoBudgets() {
     await userInTx.save({ session });
     // Commit
     await session.commitTransaction();
-    session.endSession();
+    await session.endSession();
 
     return {
       success: true,
@@ -251,7 +249,7 @@ export async function seedDemoBudgets() {
     };
   } catch (error) {
     await session.abortTransaction();
-    session.endSession();
+    await session.endSession();
     return { success: false, status: 500, error: { message: "Server error: " + error } };
   }
 }

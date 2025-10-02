@@ -5,7 +5,6 @@ import { loadDashboard } from "@/lib/loadDashBoard";
 
 export default async function Home() {
   const { user, pots, totalSaved } = await loadDashboard();
-  console.log(user);
   return (
     <>
       {/* Title */}

@@ -1,6 +1,6 @@
 "use server";
 import { validateAction } from "@/lib/handler/validate";
-import { AddWithdrawFromPotSchema, DeletePotSchema, PotSchema } from "@/lib/validation/validation";
+import { AddWithdrawFromPotSchema, PotSchema } from "@/lib/validation/validation";
 import Pot from "../models/pot.model";
 import { revalidatePath } from "next/cache";
 import { ROUTES } from "@/constants/routes";

@@ -69,7 +69,6 @@ const AddNewTransaction = ({ transactionData, onSuccess, action = "add" }: AddEd
           description: `Transaction '${data.name}' added successfully`,
           theme: "success",
         });
-        console.log("New Transaction:", newTransaction);
         form.reset();
         if (onSuccess) onSuccess();
       }
