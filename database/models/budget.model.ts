@@ -4,7 +4,7 @@ import { Document, model, models, Schema, Types } from "mongoose";
 export interface IBudget {
   ownerId: Types.ObjectId;
   categoryId: Types.ObjectId;
-  maximum: Types.Decimal128;
+  maximum: Types.Decimal128 | number;
   themeId: Types.ObjectId;
 }
 export interface IBudgetDoc extends IBudget, Document {}

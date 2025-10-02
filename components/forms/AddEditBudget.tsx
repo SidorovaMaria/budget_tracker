@@ -6,22 +6,30 @@ import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import InputField from "./InputField";
 
-import { createBudget } from "@/database/actions/budget.action";
+import { BudgetJSON, createBudget, updateBudget } from "@/database/actions/budget.action";
 import { toast } from "../ui/Toast";
 import FormOptionsSelect from "./FormOptionsSelect";
 import { useCategoryOptions, useThemeOptions } from "@/context/OptionsContext";
 type AddEditBudgetProps = {
-  budgetData?: {
-    categoryId: string;
-    maximum: number;
-    themeId: string;
-  };
+  budgetData?: BudgetJSON;
+  action?: "add" | "edit";
   onSuccess?: () => void;
   isModalOpen?: boolean;
+  closeDropDown?: () => void;
+  notAvailableCategories?: string[];
+  notAvailableThemes?: string[];
 };
 type FormInput = z.input<typeof BudgetSchema>;
 type FormOutput = z.output<typeof BudgetSchema>;
-const AddEditBudget = ({ budgetData, onSuccess, isModalOpen }: AddEditBudgetProps) => {
+const AddEditBudget = ({
+  action = "add",
+  budgetData,
+  onSuccess,
+  isModalOpen,
+  closeDropDown,
+  notAvailableCategories,
+  notAvailableThemes,
+}: AddEditBudgetProps) => {
   const form = useForm<FormInput, FormOutput>({
     resolver: zodResolver(BudgetSchema),
     defaultValues: {
@@ -34,31 +42,61 @@ const AddEditBudget = ({ budgetData, onSuccess, isModalOpen }: AddEditBudgetProp
     handleSubmit,
     formState: { isSubmitting },
   } = form;
+  console.log(budgetData);
   const onSubmit = async (data: FormInput) => {
-    const {
-      success,
-      error,
-      data: budgetData,
-    } = await createBudget({
-      categoryId: data.categoryId,
-      maximum: data.maximum as number,
-      themeId: data.themeId,
-    });
-
-    if (!success || !budgetData) {
-      toast({
-        title: "Error",
-        description: error?.message || "Failed to create budget",
-        theme: "error",
+    if (action === "edit") {
+      const { success, error } = await updateBudget(budgetData?._id as string, {
+        categoryId: data.categoryId,
+        maximum: data.maximum as number,
+        themeId: data.themeId,
       });
+      if (!success) {
+        toast({
+          title: "Error",
+          description: error?.message || "Failed to update budget",
+          theme: "error",
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: `Budget '${data.categoryId}' updated successfully`,
+          theme: "success",
+        });
+        if (onSuccess) onSuccess();
+        if (closeDropDown) closeDropDown();
+        setTimeout(() => {
+          form.reset();
+        }, 300);
+      }
     } else {
-      toast({
-        title: "Success",
-        description: `Budget '${budgetData.categoryId.name}' created successfully`,
-        theme: "success",
+      const {
+        success,
+        error,
+        data: budgetData,
+      } = await createBudget({
+        categoryId: data.categoryId,
+        maximum: data.maximum as number,
+        themeId: data.themeId,
       });
+
+      if (!success || !budgetData) {
+        toast({
+          title: "Error",
+          description: error?.message || "Failed to create budget",
+          theme: "error",
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: `Budget '${budgetData.categoryId.name}' created successfully`,
+          theme: "success",
+        });
+      }
       if (onSuccess) onSuccess();
-      form.reset();
+      if (closeDropDown) closeDropDown();
+      setTimeout(() => {
+        form.reset();
+      }, 300);
     }
   };
   useEffect(() => {
@@ -71,7 +109,12 @@ const AddEditBudget = ({ budgetData, onSuccess, isModalOpen }: AddEditBudgetProp
   return (
     <FormProvider {...form}>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <FormOptionsSelect name="categoryId" label="Category" useOption={useCategoryOptions} />
+        <FormOptionsSelect
+          name="categoryId"
+          label="Category"
+          useOption={useCategoryOptions}
+          notAvailable={notAvailableCategories}
+        />
         <InputField
           leftSlot={<span className="text-beige-500">$</span>}
           name="maximum"
@@ -84,9 +127,22 @@ const AddEditBudget = ({ budgetData, onSuccess, isModalOpen }: AddEditBudgetProp
           placeholder="E.g. 2000"
         />
 
-        <FormOptionsSelect name="themeId" label="Theme" useOption={useThemeOptions} colorTag />
+        <FormOptionsSelect
+          name="themeId"
+          label="Theme"
+          useOption={useThemeOptions}
+          colorTag
+          notAvailable={notAvailableThemes}
+        />
+
         <button type="submit" className="btn btn-primary mt-2" disabled={isSubmitting}>
-          {isSubmitting ? "Adding..." : "Add Budget"}
+          {action === "edit"
+            ? isSubmitting
+              ? "Saving..."
+              : "Save Changes"
+            : isSubmitting
+            ? "Adding..."
+            : "Add Budget"}
         </button>
       </form>
     </FormProvider>
