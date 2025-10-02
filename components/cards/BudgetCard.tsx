@@ -1,15 +1,15 @@
 "use client";
 import { motion } from "motion/react";
 import { BudgetJSON, deleteBudget } from "@/database/actions/budget.action";
-import { DropdownMenuIcon, InfoCircledIcon } from "@radix-ui/react-icons";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 import React from "react";
 import IconElipsis from "../icons/IconElipsis";
 import DropDownMenu from "../ui/DropDownMenu";
 import { toLocaleStringWithCommas } from "@/lib/utils";
-import { tr } from "zod/locales";
+
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
-import IconCaretLeft from "../icons/IconCaretLeft";
+
 import IconCaretRight from "../icons/IconCaretRight";
 import { format } from "date-fns";
 import Image from "next/image";

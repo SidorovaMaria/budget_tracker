@@ -2,7 +2,7 @@
 
 import { validateAction } from "@/lib/handler/validate";
 import { BudgetSchema } from "@/lib/validation/validation";
-import Budget, { IBudget, IBudgetDoc } from "../models/budget.model";
+import Budget, { IBudgetDoc } from "../models/budget.model";
 import { ICategoryDoc } from "../models/category.model";
 import mongoose from "mongoose";
 import { z } from "zod";
@@ -10,7 +10,6 @@ import { ITransactionDoc } from "../models/transaction.model";
 import { IThemeDoc } from "../models/theme.model";
 import { revalidatePath } from "next/cache";
 import { ROUTES } from "@/constants/routes";
-import BudgetCard from "@/components/cards/BudgetCard";
 /* =========================
    CREATE
 ========================= */

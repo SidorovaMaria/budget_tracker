@@ -2,7 +2,7 @@ import React from "react";
 
 import MobileNavBar from "@/components/navigation/MobileNavBar";
 import LeftSideBar from "@/components/navigation/LeftSideBar";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import OptionsProvider from "./OptionsProvider";
 import { seedDemoBudgets, seedDemoPots, seedDemoTransactions } from "@/database/seed";

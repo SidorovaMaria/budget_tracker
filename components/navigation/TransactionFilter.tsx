@@ -76,7 +76,6 @@ const TransactionFilter = () => {
     startTransition(() => {
       router.replace(ROUTES.TRANSACTIONS + (qs ? `?${qs}` : ""));
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch, router]);
   //Reset form values if URL params are cleared
   useEffect(() => {

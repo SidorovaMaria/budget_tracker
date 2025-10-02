@@ -41,16 +41,12 @@ const AddNewTransaction = ({ transactionData, onSuccess, action = "add" }: AddEd
     register,
     watch,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = form;
 
   async function onSubmit(data: FormInput) {
     if (action === "add") {
-      const {
-        success,
-        error,
-        data: newTransaction,
-      } = await createTransaction({
+      const { success, error } = await createTransaction({
         name: data.name,
         amount: data.amount as number,
         type: data.type,

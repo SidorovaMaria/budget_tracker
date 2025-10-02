@@ -4,7 +4,6 @@ import { format } from "date-fns";
 import Image from "next/image";
 import ContextMenu from "../ui/ContextMenu";
 import Modal from "../ui/Modal";
-import AddEditPot from "../forms/AddEditPot";
 import AddNewTransaction from "../forms/AddEditTransaction";
 import { toast } from "../ui/Toast";
 import { deleteTransaction } from "@/database/actions/transaction.action";

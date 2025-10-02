@@ -1,15 +1,11 @@
-import BudgetCard from "@/components/cards/BudgetCard";
 import DataRender from "@/components/DataRender";
-import DonutChart from "@/components/DonutChart";
+
 import AddEditBudget from "@/components/forms/AddEditBudget";
 import BudgetClientList from "@/components/lists/BudgetClientList";
 import Modal from "@/components/ui/Modal";
 import { EMPTY_BUDGETS } from "@/constants/states";
-import { getBudgets, getBudgetSpendings } from "@/database/actions/budget.action";
-import { toLocaleStringWithCommas } from "@/lib/utils";
-import { pie } from "d3";
+import { getBudgetSpendings } from "@/database/actions/budget.action";
 import React from "react";
-import { maximum } from "zod/v4-mini";
 
 const BudgetsPage = async () => {
   const { success, error, data: budgets } = await getBudgetSpendings();

@@ -1,5 +1,4 @@
 import { Document, model, models, Schema, Types } from "mongoose";
-import { IThemeDoc } from "./theme.model";
 
 interface IPot {
   ownerId: Types.ObjectId;

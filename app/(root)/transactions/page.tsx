@@ -9,10 +9,8 @@ import { getTransactions } from "@/database/actions/transaction.action";
 import React from "react";
 
 const TransactionsPage = async ({
-  params,
   searchParams,
 }: {
-  params: Promise<{ slug: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   const { sort, filter, search, page } = await searchParams;

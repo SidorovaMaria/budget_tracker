@@ -1,12 +1,9 @@
-import PotCard from "@/components/cards/PotCard";
 import DataRender from "@/components/DataRender";
 import AddEditPot from "@/components/forms/AddEditPot";
 import PotsClientList from "@/components/lists/PotsClientList";
 import Modal from "@/components/ui/Modal";
 import { EMPTY_POTS } from "@/constants/states";
 import { getPots } from "@/database/actions/pot.action";
-import { IPotDoc } from "@/database/models/pot.model";
-import { IThemeDoc } from "@/database/models/theme.model";
 
 import React from "react";
 

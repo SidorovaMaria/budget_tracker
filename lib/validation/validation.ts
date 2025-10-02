@@ -1,4 +1,3 @@
-import { defaultCategories } from "@/constants";
 import z from "zod";
 
 export const PotSchema = z.object({

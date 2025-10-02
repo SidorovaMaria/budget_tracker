@@ -80,6 +80,7 @@ export const TYPE_OPTIONS: { value: TxType; label: string; on: string; off: stri
 
 export const SORT_OPTIONS = [
   { id: "latest", label: "Latest" },
+  { id: "newest", label: "Newest" },
   { id: "oldest", label: "Oldest" },
   { id: "az", label: "A to Z" },
   { id: "za", label: "Z to A" },

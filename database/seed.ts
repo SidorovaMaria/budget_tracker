@@ -91,10 +91,10 @@ export async function seedDemoTransactions() {
       //if month is 8 (september) change to current month and year
       //if month is 7 (august) change to previous month and current year
       //else leave as is
-      if (txDate.getMonth() === 8) {
+      if (txDate.getMonth() === 7) {
         txDate.setMonth(currentMonth);
         txDate.setFullYear(currentYear);
-      } else if (txDate.getMonth() === 7) {
+      } else if (txDate.getMonth() === 6) {
         if (currentMonth === 0) {
           // January
           txDate.setMonth(11); // December

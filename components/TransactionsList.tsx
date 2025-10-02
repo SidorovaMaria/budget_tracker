@@ -1,9 +1,4 @@
 import { ITransactionDoc } from "@/database/models/transaction.model";
-import { PersonIcon } from "@radix-ui/react-icons";
-import Modal from "./ui/Modal";
-import { format } from "date-fns";
-import AddNewTransaction from "./forms/AddEditTransaction";
-import Image from "next/image";
 import TransactionCard from "./cards/TransactionCard";
 
 type TransactionsListProps = {
