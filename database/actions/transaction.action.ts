@@ -2,13 +2,12 @@
 
 import { validateAction } from "@/lib/handler/validate";
 import { AddTransactionSchema, SearchParamsSchema } from "@/lib/validation/validation";
-import { SortOrder, Types } from "mongoose";
+import { SortOrder } from "mongoose";
 import Transaction, { ITransactionDoc } from "../models/transaction.model";
-import { DEFAULT_TRANSACTIONS, SortKey } from "@/constants";
+import { SortKey } from "@/constants";
 import { escapeRegex } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 import { ROUTES } from "@/constants/routes";
-import Category from "../models/category.model";
 import mongoose from "mongoose";
 import User from "../models/user.model";
 
@@ -41,22 +40,52 @@ export async function createTransaction({
   if (!session?.user?.id) {
     return { success: false, status: 401, error: { message: "Unauthorized" } };
   }
+  const dbSession = await mongoose.startSession();
+  dbSession.startTransaction();
   try {
-    const newTransaction = await Transaction.create({
-      ownerId: session.user.id,
-      categoryId: params.categoryId,
-      name: params.name,
-      amount: params.amount,
-      type: params.type,
-      date: params.date,
-      recurring: params.recurring || false,
-    });
+    const user = await User.findById(session.user.id).session(dbSession);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const currentBalance = Number(user.balance.current.toString());
+    if (params.type === "expense" && params.amount > currentBalance) {
+      throw new Error("Insufficient funds");
+    }
+    await User.updateOne(
+      { _id: session.user.id },
+      {
+        $inc: {
+          "balance.current": params.type === "income" ? params.amount : -params.amount,
+          "balance.income": params.type === "income" ? params.amount : 0,
+          "balance.expenses": params.type === "expense" ? params.amount : 0,
+        },
+      },
+      { session: dbSession }
+    );
+
+    const newTransaction = await Transaction.create(
+      [
+        {
+          ownerId: session.user.id,
+          categoryId: params.categoryId,
+          name: params.name,
+          amount: params.amount,
+          type: params.type,
+          date: params.date,
+          recurring: params.recurring || false,
+        },
+      ],
+      { session: dbSession }
+    );
+    await dbSession.commitTransaction();
+    await dbSession.endSession();
     revalidatePath(ROUTES.TRANSACTIONS);
     return { success: true, status: 201, data: JSON.parse(JSON.stringify(newTransaction)) };
   } catch (error) {
+    await dbSession.abortTransaction();
+    await dbSession.endSession();
     return { success: false, status: 500, error: { message: "Server error: " + error } };
   }
-  // Implementation here
 }
 
 const sortMapping: Record<SortKey, Record<string, SortOrder>> = {
