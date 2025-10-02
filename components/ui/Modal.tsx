@@ -24,10 +24,13 @@ const Modal = ({ children, modalContent, title, description }: ModalProps) => {
   });
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
+      <Dialog.Trigger asChild aria-controls="modal-content">
+        {children}
+      </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/70 data-[state=open]:animate-fade-in [state=closed]:animate-fade-out" />
         <Dialog.Content
+          id="modal-content"
           className="fixed left-[50%] top-[50%] z-50 flex flex-col gap-5  translate-x-[-50%] translate-y-[-50%] bg-white w-full max-w-xs sm:max-w-sm md:max-w-xl
         px-5 py-6 rounded-xl shadow-xl shadow-grey-500
         data-[state=open]:animate-modal-in data-[state=closed]:animate-modal-out"

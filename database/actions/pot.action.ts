@@ -12,7 +12,11 @@ import mongoose from "mongoose";
 /* =========================
    CREATE
 ========================= */
-export async function createPot(name: string, target: number, themeId: string) {
+export async function createPot(
+  name: string,
+  target: number,
+  themeId: string
+): Promise<ActionResponse<PotJSON>> {
   const validated = await validateAction({
     params: { name, target, themeId },
     schema: PotSchema,
@@ -89,7 +93,12 @@ export async function getPots(): Promise<ActionResponse<PotJSON[]>> {
 // UPDATE
 // =========================
 
-export async function updatePot(potId: string, name: string, target: number, themeId: string) {
+export async function updatePot(
+  potId: string,
+  name: string,
+  target: number,
+  themeId: string
+): Promise<ActionResponse> {
   const validated = await validateAction({
     params: { potId, name, target, themeId },
     schema: PotSchema.extend({ potId: z.string().min(1, { error: "Missing pot ID" }) }),
@@ -130,7 +139,7 @@ export async function updatePot(potId: string, name: string, target: number, the
 // =========================
 // DELETE
 // =========================
-export async function deletePot(potId: string) {
+export async function deletePot(potId: string): Promise<ActionResponse> {
   const validated = await validateAction({
     params: { potId },
     schema: z.object({ potId: z.string().min(1, { error: "Missing pot ID" }) }),
@@ -185,7 +194,7 @@ export async function deletePot(potId: string) {
 // ADD / WITHDRAW FROM POT
 // =========================
 
-export async function addToPot(potId: string, amount: number) {
+export async function addToPot(potId: string, amount: number): Promise<ActionResponse> {
   const validated = await validateAction({
     params: { potId, amount },
     schema: AddWithdrawFromPotSchema.extend({
@@ -241,7 +250,7 @@ export async function addToPot(potId: string, amount: number) {
   }
 }
 
-export async function withdrawFromPot(potId: string, amount: number) {
+export async function withdrawFromPot(potId: string, amount: number): Promise<ActionResponse> {
   const validated = await validateAction({
     params: { potId, amount },
     schema: AddWithdrawFromPotSchema.extend({

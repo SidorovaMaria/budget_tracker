@@ -40,7 +40,7 @@ function SelectImpl({
   return (
     <RadixSelect.Root value={value} onValueChange={onValueChange}>
       <RadixSelect.Trigger className="flex flex-col gap-1 w-full group">
-        <div className="input-basic flex items-center">
+        <div className="input-basic flex items-center mr-3 whitespace-nowrap">
           {colorTag && selected && "value" in selected && selected.value && (
             <span
               className="size-4 rounded-full mr-3"
@@ -50,7 +50,7 @@ function SelectImpl({
 
           {selected ? selected.label : placeholder ?? "Select..."}
 
-          <RadixSelect.Icon className="ml-auto group-data-[state=open]:rotate-180 transition-300">
+          <RadixSelect.Icon className="ml-auto  group-data-[state=open]:rotate-180 transition-300">
             <IconCaretDown />
           </RadixSelect.Icon>
         </div>
@@ -70,9 +70,9 @@ function SelectImpl({
                 <RadixSelect.Item
                   key={option.id}
                   value={option.id}
-                  className="px-5 py-3 flex items-center border-b not-first:rounded-t-lg not-last:rounded-b-lg last:border-b-0 cursor-pointer hover:bg-grey-100 outline-none border-grey-100"
+                  className="px-5 py-3 flex items-center border-b  last:border-b-0 cursor-pointer hover:bg-grey-100 outline-none border-grey-100"
                   style={{
-                    // subtle tint for selected row if you want it
+                    // subtle tint for selected row
                     backgroundColor:
                       colorTag && "value" in option && option.value
                         ? isSelected

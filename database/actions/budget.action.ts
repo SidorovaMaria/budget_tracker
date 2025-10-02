@@ -5,6 +5,9 @@ import { BudgetSchema } from "@/lib/validation/validation";
 import Budget, { IBudget, IBudgetDoc } from "../models/budget.model";
 import { ICategoryDoc } from "../models/category.model";
 
+/* =========================
+   CREATE
+========================= */
 export async function createBudget({
   categoryId,
   maximum,
@@ -66,4 +69,32 @@ export async function createBudget({
   }
 
   // Implementation for creating a budget
+}
+/* =========================
+   READ
+========================= */
+export async function getBudgets(): Promise<ActionResponse<BudgetJSON[]>> {
+  const validated = await validateAction({ authorize: true });
+  if (!validated.success) return validated;
+
+  const { session } = validated;
+
+  if (!session?.user?.id) {
+    return { success: false, status: 401, error: { message: "Unauthorized" } };
+  }
+
+  try {
+    const budgets = await Budget.find({ ownerId: session.user.id }).populate("categoryId themeId");
+    return {
+      success: true,
+      status: 200,
+      data: JSON.parse(JSON.stringify(budgets)),
+    };
+  } catch (error) {
+    return {
+      success: false,
+      status: 500,
+      error: { message: String(error) },
+    };
+  }
 }

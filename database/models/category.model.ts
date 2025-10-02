@@ -1,4 +1,4 @@
-import { Document, model, models, Schema, Types } from "mongoose";
+import { Document, model, models, Schema } from "mongoose";
 
 export interface ICategory {
   name: string; //e.g. Food & Dining
