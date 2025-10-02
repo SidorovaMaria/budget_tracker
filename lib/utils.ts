@@ -12,14 +12,14 @@ export function decimalToNumber(this: any) {
   }
   return obj;
 }
-export const toLocaleStringWithCommas = (num: number, currency: string, afterComa: number = 2) => {
+export function toLocaleStringWithCommas(num: number, currency: string, afterComa: number = 2) {
   return num.toLocaleString("en-US", {
     minimumFractionDigits: afterComa,
     maximumFractionDigits: afterComa,
     style: "currency",
     currency: currency,
   });
-};
+}
 // Helper (optional but nice): unwraps action results or throws a clear error
 export function unwrap<T>(
   res: { success: boolean; data?: T; error?: { message?: string } },
@@ -29,4 +29,12 @@ export function unwrap<T>(
     throw new Error(res?.error?.message || `Could not fetch ${label}`);
   }
   return res.data;
+}
+export function toDateInputValue(d: Date) {
+  const tzo = d.getTimezoneOffset() * 60000;
+  return new Date(d.getTime() - tzo).toISOString().slice(0, 10); // "YYYY-MM-DD"
+}
+
+export function escapeRegex(s: string) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

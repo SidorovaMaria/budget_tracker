@@ -5,7 +5,7 @@ interface ITransaction {
   ownerId: Types.ObjectId;
   categoryId: Types.ObjectId;
   name: string;
-  amount: Types.Decimal128;
+  amount: Types.Decimal128 | number;
   type: "income" | "expense";
   date?: Date;
   recurring?: boolean;

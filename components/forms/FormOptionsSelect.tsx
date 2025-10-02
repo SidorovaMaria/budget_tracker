@@ -13,6 +13,7 @@ type FormOptionsSelectProps<T extends FieldValues> = {
   colorTag?: boolean;
   notAvailable?: string[];
   emptyOptionMsg?: string;
+  extraOption?: Options;
 };
 const FormOptionsSelect = <T extends FieldValues>({
   name,
@@ -21,6 +22,7 @@ const FormOptionsSelect = <T extends FieldValues>({
   colorTag,
   notAvailable,
   emptyOptionMsg,
+  extraOption,
 }: FormOptionsSelectProps<T>) => {
   const prefersReducedMotion = useReducedMotion();
   const {
@@ -30,6 +32,9 @@ const FormOptionsSelect = <T extends FieldValues>({
   let options = useOption(); // ThemeOption[]
   if (notAvailable && notAvailable.length > 0) {
     options = options.filter((option) => !notAvailable.includes(option.id));
+  }
+  if (extraOption) {
+    options = [extraOption, ...options];
   }
 
   const hasError = !!errors[name];

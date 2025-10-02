@@ -11,6 +11,7 @@ type FormInputProps<T extends FieldValues> = {
   hint?: string;
   className?: string;
   leftSlot?: React.ReactNode;
+  rightSlot?: React.ReactNode;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "name" | "id">;
 
 const InputField = <T extends FieldValues>({
@@ -19,6 +20,7 @@ const InputField = <T extends FieldValues>({
   hint,
   className,
   leftSlot,
+  rightSlot,
   ...inputProps
 }: FormInputProps<T>) => {
   const prefersReducedMotion = useReducedMotion();
@@ -46,6 +48,7 @@ const InputField = <T extends FieldValues>({
           aria-describedby={hasError ? `${inputId}-error` : undefined}
           disabled={isSubmitting ? true : false}
         />
+        {rightSlot && <div className="ml-3">{rightSlot}</div>}
       </div>
       <AnimatePresence mode="wait">
         {hasError ? (

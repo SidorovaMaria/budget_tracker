@@ -5,6 +5,7 @@ import LeftSideBar from "@/components/navigation/LeftSideBar";
 import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import OptionsProvider from "./OptionsProvider";
+import { seedDemoBudgets, seedDemoPots, seedDemoTransactions } from "@/database/seed";
 
 /**
  * AuthLayout is a layout component for authentication-related pages.
@@ -26,14 +27,17 @@ const MainLayout = async ({ children }: LayoutProps) => {
   if (!session?.user) {
     redirect("/sign-in");
   }
+  await seedDemoPots();
+  await seedDemoTransactions();
+  await seedDemoBudgets();
   return (
     <OptionsProvider>
       <main className="min-h-screen w-full flex ">
         <LeftSideBar />
         <section
           id="main-content"
-          className="flex flex-col w-full px-4 py-6  gap-8
-      md:px-10 md:py-8 mb-[52px] md:mb-[74px]"
+          className="flex flex-col w-full px-4 py-6 gap-8
+      md:px-10 md:py-8 mb-[52px] md:mb-[74px] lg:mb-0"
         >
           {children}
         </section>
