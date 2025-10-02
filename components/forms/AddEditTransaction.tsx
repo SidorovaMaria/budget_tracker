@@ -8,7 +8,7 @@ import { z } from "zod";
 import InputField from "./InputField";
 import FormOptionsSelect from "./FormOptionsSelect";
 import { useCategoryOptions } from "@/context/OptionsContext";
-import { createTransaction } from "@/database/actions/transaction.action";
+import { createTransaction, updateTransaction } from "@/database/actions/transaction.action";
 import { toast } from "../ui/Toast";
 import { toDateInputValue } from "@/lib/utils";
 import { ITransactionDoc } from "@/database/models/transaction.model";
@@ -70,6 +70,31 @@ const AddNewTransaction = ({ transactionData, onSuccess, action = "add" }: AddEd
           theme: "success",
         });
         form.reset();
+        if (onSuccess) onSuccess();
+      }
+    } else {
+      const result = await updateTransaction({
+        transactionId: String(transactionData?._id),
+        params: {
+          name: data.name,
+          amount: data.amount as number,
+          type: data.type,
+          date: data.date as Date,
+          recurring: data.recurring,
+          categoryId: data.categoryId,
+        },
+      });
+      if (!result.success) {
+        toast({
+          title: "Error",
+          description: result.error?.message || "Unknown error",
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: `Transaction '${data.name}' updated successfully`,
+          theme: "success",
+        });
         if (onSuccess) onSuccess();
       }
     }
