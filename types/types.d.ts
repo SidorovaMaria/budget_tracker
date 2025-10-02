@@ -42,3 +42,22 @@ type UserJSON = {
     expenses: number;
   };
 };
+type BudgetJSON = {
+  categoryId: {
+    _id: string;
+    name: string;
+    key: string;
+  };
+  id: string;
+  maximum: number;
+  ownerId: string;
+  themeId: {
+    _id: string;
+    name: string;
+    value: string;
+  };
+};
+type getTransactionsReturn = {
+  transactions: (ITransactionDoc & { categoryId: { name: string; themeId: string } })[];
+  pagination: { page: number; pageSize: number; total: number; totalPages: number };
+};

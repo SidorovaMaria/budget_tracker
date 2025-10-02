@@ -4,6 +4,11 @@ export interface IUser {
   username: string;
   email: string;
   image?: string;
+  seededDemo: {
+    transactions: boolean;
+    pots: boolean;
+    budgets: boolean;
+  };
   balance: {
     current: Decimal128;
     income: Decimal128;
@@ -17,6 +22,11 @@ const UserSchema = new Schema<IUser>(
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     image: { type: String, default: "https://avatar.iran.liara.run/public" },
+    seededDemo: {
+      transactions: { type: Boolean, default: false },
+      pots: { type: Boolean, default: false },
+      budgets: { type: Boolean, default: false },
+    },
     balance: {
       current: { type: Schema.Types.Decimal128, default: 0 },
       income: { type: Schema.Types.Decimal128, default: 0 },

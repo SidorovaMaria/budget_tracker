@@ -28,7 +28,20 @@ export async function SignUpWithCredentials(params: AuthCredentials): Promise<Ac
     //Hash Password
     const hashedPasswword = await bcrypt.hash(password, 12);
     // 3) Create user
-    const user = await User.create([{ username, email }], { session });
+    const user = await User.create(
+      [
+        {
+          username,
+          email,
+          balance: {
+            current: 4836,
+            income: 3814.25,
+            expenses: 1700.5,
+          },
+        },
+      ],
+      { session }
+    );
     const [newUser] = user;
 
     // 4) Create account mapping for credentials provider
@@ -45,8 +58,6 @@ export async function SignUpWithCredentials(params: AuthCredentials): Promise<Ac
     );
 
     await session.commitTransaction();
-    // 5) Auto sign-in (server helper)
-
     await signIn("credentials", { email, password, redirect: false });
 
     return { success: true, status: 201 };

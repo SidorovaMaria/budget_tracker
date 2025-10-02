@@ -35,6 +35,11 @@ export async function POST(request: Request) {
             username: slug_username,
             email,
             image,
+            balance: {
+              current: 4836,
+              income: 3814.25,
+              expenses: 1700.5,
+            },
           },
         ],
         { session }
