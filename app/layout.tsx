@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 import { Toaster } from "sonner";
 import MobileNavBar from "@/components/navigation/MobileNavBar";
 
@@ -57,8 +57,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  //Populate USer
+
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           rel="stylesheet"
@@ -67,10 +69,21 @@ export default async function RootLayout({
         />
       </head>
       <SessionProvider session={session}>
-        <body className={` ${publicSans.variable} antialiased `}>
+        <body className={` ${publicSans.variable} antialiased bg-beige-100`}>
           {children}
           <MobileNavBar />
           <Toaster />
+          <form
+            action={async () => {
+              "use server";
+              await signOut();
+            }}
+            className="absolute bottom-4 right-4"
+          >
+            <button type="submit" className="base-medium w-fit !bg-transparent px-4 py-3">
+              <span className="btn btn-primary">Logout</span>
+            </button>
+          </form>
         </body>
       </SessionProvider>
     </html>

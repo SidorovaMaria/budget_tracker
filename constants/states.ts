@@ -18,3 +18,9 @@ export const NO_TRANSACTIONS_FOUND = {
   title: "No transactions found.",
   description: "Try adjusting your search or filter to find what you're looking for.",
 };
+
+export const EMPTY_BUDGETS = {
+  title: "Oops! You have not set any budgets yet.",
+  description:
+    "Budgets help you monitor your spending in different categories. Start by setting a budget to take control of your finances!",
+};
