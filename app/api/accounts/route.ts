@@ -2,7 +2,8 @@
 
 import Account from "@/database/models/account.model";
 import connectDB from "@/lib/mongoose";
-import { AccountSchema } from "@/lib/validation/validation";
+import { AccountSchema } from "@/lib/validation/validation-auth";
+
 import { NextResponse } from "next/server";
 
 export async function GET() {

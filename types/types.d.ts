@@ -3,6 +3,7 @@ type NavLink = {
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
   href: string;
 };
+type IconProps = { className?: string };
 
 type ActionResponse<T = null> = {
   success: boolean;

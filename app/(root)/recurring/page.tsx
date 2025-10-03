@@ -7,7 +7,6 @@ import { ROUTES } from "@/constants/routes";
 import { RECURRING_EMPTY_STATE } from "@/constants/states";
 import { getRecurringTransactions } from "@/database/actions/recurring.action";
 
-import { ITransactionDoc } from "@/database/models/transaction.model";
 const RecurringTransactionsPage = async ({
   searchParams,
 }: {

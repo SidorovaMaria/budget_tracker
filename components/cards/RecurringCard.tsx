@@ -1,7 +1,6 @@
 import { toLocaleStringWithCommas } from "@/lib/utils";
 import React from "react";
 import IconRecurringBills from "../icons/IconRecurringBills";
-import { ITransactionDoc } from "@/database/models/transaction.model";
 type RecurringCardProps = {
   totalToPay: number;
   bucketSummary: {

@@ -17,7 +17,7 @@ import React from "react";
  * @returns {JSX.Element} The rendered authentication layout.
  */
 
-const AuthLayout = ({ children }: LayoutProps) => {
+const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       {/* Skip Link for keyboard users */}

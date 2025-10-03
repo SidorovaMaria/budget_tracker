@@ -16,7 +16,6 @@ import { useCategoryOptions } from "@/context/OptionsContext";
 
 import MobileSelectMenu from "../forms/MobileSelectMenu";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ROUTES } from "@/constants/routes";
 import useDebounce from "@/hooks/useDebounce";
 
 const allCategoryOption = { id: "all", label: "All", value: "all" };

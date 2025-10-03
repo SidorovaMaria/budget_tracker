@@ -18,7 +18,10 @@ export async function POST(request: Request) {
       user,
     });
     if (!validatedData.success) {
-      return new Error("Invalid data");
+      return NextResponse.json(
+        { success: false, error: "Invalid payload", issues: validatedData.error },
+        { status: 400 }
+      );
     }
     const { username, email, image } = validatedData.data.user;
     const slug_username = slugify(username, {

@@ -22,7 +22,7 @@ import { seedDemoBudgets, seedDemoPots, seedDemoTransactions } from "@/database/
  * @returns {JSX.Element} The rendered authentication layout.
  */
 
-const MainLayout = async ({ children }: LayoutProps) => {
+const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth();
   if (!session?.user) {
     redirect("/sign-in");
