@@ -22,8 +22,11 @@ import useDebounce from "@/hooks/useDebounce";
 const allCategoryOption = { id: "all", label: "All", value: "all" };
 type FormInput = z.input<typeof searchParamsSchema>;
 type FormOutput = z.output<typeof searchParamsSchema>;
-
-const TransactionFilter = () => {
+type Props = {
+  route: string;
+  recurring?: boolean;
+};
+const TransactionFilter = ({ route, recurring = false }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -61,9 +64,9 @@ const TransactionFilter = () => {
     const qs = query.toString();
 
     startTransition(() => {
-      router.replace(ROUTES.TRANSACTIONS + (qs ? `?${qs}` : ""));
+      router.replace(route + (qs ? `?${qs}` : ""));
     });
-  }, [sort, filter, router]);
+  }, [sort, filter, router, route]);
   // Effect 2: update URL when the (debounced) search value changes
   useEffect(() => {
     const trimmed = (debouncedSearch ?? "").trim();
@@ -74,9 +77,9 @@ const TransactionFilter = () => {
     } else query.delete("search");
     const qs = query.toString();
     startTransition(() => {
-      router.replace(ROUTES.TRANSACTIONS + (qs ? `?${qs}` : ""));
+      router.replace(route + (qs ? `?${qs}` : ""));
     });
-  }, [debouncedSearch, router]);
+  }, [debouncedSearch, router, route]);
   //Reset form values if URL params are cleared
   useEffect(() => {
     if (!searchParams.get("search") && search) form.setValue("search", "");
@@ -94,11 +97,11 @@ const TransactionFilter = () => {
           label=""
           type="text"
           autoComplete="off"
-          placeholder="Search transactions..."
+          placeholder={`${recurring ? "Search Bills..." : "Search transactions..."}`}
           className="w-full max-w-[320px]"
         />
         {/* Tablet & Desktop */}
-        <div className="gap-6 items-center hidden md:flex w-full ml-auto">
+        <div className={`gap-6 items-center hidden md:flex ${recurring ? "" : " w-full "} ml-auto`}>
           <div className="flex items-center gap-2 w-full">
             <label className="whitespace-nowrap text-preset-4 text-grey-500" htmlFor="sort">
               Sort by:
@@ -117,17 +120,19 @@ const TransactionFilter = () => {
               )}
             />
           </div>
-          <div className="flex items-center gap-2 w-full">
-            <label className="whitespace-nowrap text-preset-4 text-grey-500" htmlFor="filter">
-              Filter:
-            </label>
-            <FormOptionsSelect
-              name="filter"
-              label=""
-              useOption={useCategoryOptions}
-              extraOption={allCategoryOption}
-            />
-          </div>
+          {recurring ? null : (
+            <div className="flex items-center gap-2 w-full">
+              <label className="whitespace-nowrap text-preset-4 text-grey-500" htmlFor="filter">
+                Filter:
+              </label>
+              <FormOptionsSelect
+                name="filter"
+                label=""
+                useOption={useCategoryOptions}
+                extraOption={allCategoryOption}
+              />
+            </div>
+          )}
         </div>
         {/* Mobile */}
         <div className="gap-6 items-center flex md:hidden ml-auto">
@@ -144,19 +149,21 @@ const TransactionFilter = () => {
               />
             }
           />
-          <DropDownMenu
-            trigger={
-              <IconFilterMobile className="text-grey-900 cursor-pointer hover:scale-110 transition-300" />
-            }
-            context={
-              <MobileSelectMenu
-                control={control}
-                name="filter"
-                title="Category"
-                options={CATEGORY_OPTIONS}
-              />
-            }
-          />
+          {recurring ? null : (
+            <DropDownMenu
+              trigger={
+                <IconFilterMobile className="text-grey-900 cursor-pointer hover:scale-110 transition-300" />
+              }
+              context={
+                <MobileSelectMenu
+                  control={control}
+                  name="filter"
+                  title="Category"
+                  options={CATEGORY_OPTIONS}
+                />
+              }
+            />
+          )}
         </div>
       </form>
     </FormProvider>

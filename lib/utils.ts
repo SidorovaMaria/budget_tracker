@@ -38,3 +38,9 @@ export function toDateInputValue(d: Date) {
 export function escapeRegex(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
+//if 1 -> st if 2 -> nd if 3 -> rd else th
+export const prefixFromNumber = (num: number) => {
+  const suffix =
+    ["th", "st", "nd", "rd"][num % 100 >= 11 && num % 100 <= 13 ? 0 : num % 10] || "th";
+  return `${num}${suffix}`;
+};

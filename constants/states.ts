@@ -24,3 +24,8 @@ export const EMPTY_BUDGETS = {
   description:
     "Budgets help you monitor your spending in different categories. Start by setting a budget to take control of your finances!",
 };
+export const RECURRING_EMPTY_STATE = {
+  title: "No recurring transactions found.",
+  description:
+    "Recurring transactions help you manage your regular expenses and income. Start by adding a recurring transaction or setting up one of the existing ones as recurring to stay on top of your finances!",
+};

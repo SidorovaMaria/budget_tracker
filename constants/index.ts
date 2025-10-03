@@ -6,6 +6,7 @@ import IconNavPots from "@/components/icons/IconNavPots";
 import IconRecurringBills from "@/components/icons/IconRecurringBills";
 import { ITheme } from "@/database/models/theme.model";
 import { TxType } from "@/components/forms/AddEditTransaction";
+export const AVATAR_PX = 40;
 export const NavLinks: NavLink[] = [
   {
     label: "Overview",
@@ -453,7 +454,7 @@ export const DEFAULT_TRANSACTIONS = [
     avatar: "/avatars/elevate-education.jpg",
     name: "Elevate Education",
     category: "Education",
-    date: "2024-07-05T11:15:22Z",
+    date: "2024-07-04T11:15:22Z",
     amount: -50.0,
     recurring: true,
   },

@@ -4,6 +4,7 @@ import Pagination from "@/components/navigation/Pagination";
 import TransactionFilter from "@/components/navigation/TransactionFilter";
 import TransactionsList from "@/components/TransactionsList";
 import Modal from "@/components/ui/Modal";
+import { ROUTES } from "@/constants/routes";
 import { EMPTY_TRANSACTIONS, NO_TRANSACTIONS_FOUND } from "@/constants/states";
 import { getTransactions } from "@/database/actions/transaction.action";
 import React from "react";
@@ -50,7 +51,7 @@ const TransactionsPage = async ({
         className="flex flex-col w-full rounded-xl px-5 py-6 gap-6 bg-white h-full md:p-8"
       >
         {/* Search Filter and Sort Block */}
-        <TransactionFilter />
+        <TransactionFilter route={ROUTES.TRANSACTIONS} />
         {/* Transactions List */}
         <DataRender
           success={success}

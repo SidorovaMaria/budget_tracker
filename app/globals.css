@@ -115,12 +115,24 @@ html {
 @utility text-preset-5-bold {
   @apply text-xs leading-150 font-bold;
 }
-@utility lower-border {
+@utility lower-borde {
   position: relative;
   &::after {
     content: "";
     position: absolute;
     bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-grey-100);
+  }
+}
+@utility lower-border-* {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: --value([integer]);
     left: 0;
     width: 100%;
     height: 1px;

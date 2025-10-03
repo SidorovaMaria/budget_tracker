@@ -7,8 +7,8 @@ import Modal from "../ui/Modal";
 import AddNewTransaction from "../forms/AddEditTransaction";
 import { toast } from "../ui/Toast";
 import { deleteTransaction } from "@/database/actions/transaction.action";
+import { AVATAR_PX } from "@/constants";
 
-const AVATAR_PX = 40;
 const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 
 const TransactionCard = ({

@@ -3,7 +3,7 @@
 import { validateAction } from "@/lib/handler/validate";
 import { AddTransactionSchema, SearchParamsSchema } from "@/lib/validation/validation";
 import { z } from "zod";
-import { SortOrder } from "mongoose";
+import { SortOrder, Types } from "mongoose";
 import Transaction, { ITransactionDoc } from "../models/transaction.model";
 import { SortKey } from "@/constants";
 import { escapeRegex } from "@/lib/utils";
@@ -11,6 +11,8 @@ import { revalidatePath } from "next/cache";
 import { ROUTES } from "@/constants/routes";
 import mongoose from "mongoose";
 import User from "../models/user.model";
+import { a } from "motion/react-client";
+import { auth } from "@/auth";
 
 /* =========================
    CREATE
@@ -106,7 +108,6 @@ export type GetTransactionsParams = {
   filter?: string; // categoryId or "all"
   search?: string;
 };
-
 /* =========================
    READ
 ========================= */
@@ -169,7 +170,6 @@ export async function getTransactions({
 export async function getRecentTransactions(): Promise<ActionResponse<ITransactionDoc[]>> {
   const validated = await validateAction({
     params: {},
-    schema: z.object({}),
     authorize: true,
   });
   if (!validated.success) return validated;
