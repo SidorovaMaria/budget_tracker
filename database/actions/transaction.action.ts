@@ -98,6 +98,7 @@ const sortMapping: Record<SortKey, Record<string, SortOrder>> = {
   highest: { amount: -1, date: -1, _id: -1 },
   lowest: { amount: 1, date: -1, _id: -1 },
 };
+
 export type GetTransactionsParams = {
   page?: number;
   pageSize?: number;
@@ -165,6 +166,34 @@ export async function getTransactions({
     return { success: false, status: 500, error: { message: "Server error: " + error } };
   }
 }
+export async function getRecentTransactions(): Promise<ActionResponse<ITransactionDoc[]>> {
+  const validated = await validateAction({
+    params: {},
+    schema: z.object({}),
+    authorize: true,
+  });
+  if (!validated.success) return validated;
+  const { session } = validated;
+  if (!session?.user?.id) {
+    return { success: false, status: 401, error: { message: "Unauthorized" } };
+  }
+  try {
+    const transactions = await Transaction.find({ ownerId: session.user.id })
+      .sort({ date: -1, _id: -1 })
+      .limit(5);
+    return {
+      success: true,
+      status: 200,
+      data: JSON.parse(JSON.stringify(transactions)),
+    };
+  } catch (error) {
+    return { success: false, status: 500, error: { message: "Server error: " + error } };
+  }
+}
+
+/* =========================
+    DELETE
+  ========================= */
 
 export async function deleteTransaction(transactionId: string) {
   const validated = await validateAction({
@@ -221,6 +250,9 @@ export async function deleteTransaction(transactionId: string) {
   }
 }
 
+/* =========================
+    UPDATE
+  ========================= */
 export async function updateTransaction({
   transactionId,
   params: { name, amount, type, date, recurring, categoryId },

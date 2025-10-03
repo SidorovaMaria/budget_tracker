@@ -32,15 +32,8 @@ const TransactionsPage = async ({
     (typeof search === "string" && search !== "");
 
   let emptyState = EMPTY_TRANSACTIONS;
-  let EmptyBtn = (
-    <Modal title="Add New Transaction" modalContent={<AddNewTransaction />} description="">
-      <button className="btn btn-primary">+ Add New Transaction</button>
-    </Modal>
-  );
-
   if (isEmpty && isFilterApplied) {
     emptyState = NO_TRANSACTIONS_FOUND;
-    EmptyBtn = <></>; // No button in this case
   }
 
   return (
@@ -62,7 +55,6 @@ const TransactionsPage = async ({
         <DataRender
           success={success}
           data={data?.transactions}
-          emptyStateBtn={EmptyBtn}
           emptyState={emptyState}
           render={(transactions) => <TransactionsList transactions={transactions} />}
         />

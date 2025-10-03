@@ -1,10 +1,21 @@
 import BalanceCard from "@/components/cards/BalanceCard";
+import BudgetOverview from "@/components/overview/BudgetOverview";
 import PotsOverview from "@/components/overview/PotsOverview";
+import TransactionsOverview from "@/components/overview/TransactionsOverview";
 
 import { loadDashboard } from "@/lib/loadDashBoard";
 
 export default async function Home() {
-  const { user, pots, totalSaved } = await loadDashboard();
+  const {
+    user,
+    pots,
+    totalSavedPots,
+    recentTransactions,
+    totalSpentBudgets,
+    totalBudget,
+    pieChartData,
+    topFourBudgets,
+  } = await loadDashboard();
   return (
     <>
       {/* Title */}
@@ -21,9 +32,20 @@ export default async function Home() {
           />
         ))}
       </section>
-      <div className="w-full grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-row-6 ">
-        <div className="xl:[grid-area:1/1/3/2]">
-          <PotsOverview pots={pots} total={totalSaved} />
+      <div className="w-full grid grid-cols-1 gap-4 lg:grid-cols-2 lg:grid-rows-6">
+        <div className="lg:[grid-area:1/1/3/2]">
+          <PotsOverview pots={pots} total={totalSavedPots} />
+        </div>
+        <div className="lg:[grid-area:3/1/7/2]">
+          <TransactionsOverview transactions={recentTransactions} />
+        </div>
+        <div className="lg:[grid-area:1/2/5/3]">
+          <BudgetOverview
+            totalSpent={totalSpentBudgets}
+            totalBudget={totalBudget}
+            pieChartData={pieChartData}
+            topFourBudgets={topFourBudgets}
+          />
         </div>
       </div>
     </>
