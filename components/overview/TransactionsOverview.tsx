@@ -7,7 +7,6 @@ type Props = {
   transactions: ITransactionDoc[];
 };
 const TransactionsOverview = ({ transactions }: Props) => {
-  console.log(transactions);
   return (
     <section className="overview-content" aria-labelledby="Top 4 Pots">
       <OverviewLink title="Transactions" href={ROUTES.TRANSACTIONS} linkText="View All" />

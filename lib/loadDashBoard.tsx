@@ -3,14 +3,16 @@ import { unwrap } from "./utils";
 import { getPots } from "@/database/actions/pot.action";
 import { getRecentTransactions } from "@/database/actions/transaction.action";
 import { getBudgetSpendings } from "@/database/actions/budget.action";
+import { getRecurringTransactions } from "@/database/actions/recurring.action";
 
 export async function loadDashboard() {
   // Kick both requests at once
-  const [userRes, potsRes, transactionRes, budgetRes] = await Promise.all([
+  const [userRes, potsRes, transactionRes, budgetRes, recurringRes] = await Promise.all([
     getUser(),
     getPots(),
     getRecentTransactions(),
     getBudgetSpendings(),
+    getRecurringTransactions(),
   ]);
 
   // Validate each independently (clear messages if one fails)
@@ -18,6 +20,7 @@ export async function loadDashboard() {
   const pots = unwrap(potsRes, "pots data");
   const recentTransactions = unwrap(transactionRes, "recent transactions");
   const budgets = unwrap(budgetRes, "budgets data");
+  const recurringTransactions = unwrap(recurringRes, "recurring transactions");
   // Calculate total saved across all pots
   const totalSpentBudgets = budgets.reduce((acc, budget) => acc + (budget.totalSpent || 0), 0);
   const totalBudget = budgets.reduce((acc, budget) => acc + Number(budget.maximum), 0);
@@ -29,6 +32,8 @@ export async function loadDashboard() {
     maximum: Number(budget.maximum),
   }));
   const topFourBudgets = budgets.slice(0, 4);
+
+  const recurringSummary = recurringTransactions.bucketSummary;
   return {
     user,
     pots: pots.slice(0, 4),
@@ -38,5 +43,6 @@ export async function loadDashboard() {
     totalSpentBudgets,
     totalBudget,
     topFourBudgets,
+    recurringSummary,
   };
 }

@@ -5,6 +5,7 @@ import BudgetClientList from "@/components/lists/BudgetClientList";
 import Modal from "@/components/ui/Modal";
 import { EMPTY_BUDGETS } from "@/constants/states";
 import { getBudgetSpendings } from "@/database/actions/budget.action";
+import { format } from "date-fns";
 import React from "react";
 
 const BudgetsPage = async () => {
@@ -18,13 +19,17 @@ const BudgetsPage = async () => {
   const notAvailableCategories = budgets
     ? budgets.map((budget) => budget.categoryId.toString())
     : [];
+  const date = new Date();
 
   return (
     <>
       {/* Title */}
       <header className="flex-row-between">
         <h1 id="budgets" className="">
-          Budgets
+          Budgets{" "}
+          <span className="text-preset-4 text-grey-500  capitalize">
+            ({format(date, "MMMM yyyy")})
+          </span>
         </h1>
         <Modal
           title="Add New Budget"

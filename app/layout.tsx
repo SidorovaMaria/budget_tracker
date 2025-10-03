@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import { Toaster } from "sonner";
 import MobileNavBar from "@/components/navigation/MobileNavBar";
 
@@ -73,17 +73,6 @@ export default async function RootLayout({
           {children}
           <MobileNavBar />
           <Toaster />
-          <form
-            action={async () => {
-              "use server";
-              await signOut();
-            }}
-            className="absolute bottom-4 right-4"
-          >
-            <button type="submit" className="base-medium w-fit !bg-transparent px-4 py-3">
-              <span className="btn btn-primary">Logout</span>
-            </button>
-          </form>
         </body>
       </SessionProvider>
     </html>

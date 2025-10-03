@@ -52,11 +52,11 @@ const BudgetCard = ({ budget, notAvailableThemes, notAvailableCategories }: Budg
         />
         <h3 className="text-preset-2 w-full flex-1 flex items-center gap-3">
           {budget.category.name}
-          {isOverBudget && (
+          {isOverBudget ? (
             <span className="text-red-500/80  text-preset-4-bold inline-flex items-center gap-1">
               <InfoCircledIcon className="size-5 text-red-500" /> Over Budget
             </span>
-          )}
+          ) : null}
         </h3>
         <DropDownMenu
           trigger={
